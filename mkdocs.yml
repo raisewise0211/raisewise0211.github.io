@@ -41,4 +41,7 @@ nav:
     - Overview: math/index.md
     - Linear Algebra:
       - 벡터와 행렬: math/linear-algebra/vector-matrix.md
+  - Papers:
+    - Overview: papers/index.md
+    - MAPF: papers/mapf/index.md
 

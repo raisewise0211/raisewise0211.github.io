@@ -31,6 +31,15 @@
 
     [:octicons-arrow-right-24: 바로가기](math/index.md)
 
+-   **논문 리뷰** (Papers)
+
+    ---
+
+    읽은 논문을 주제별로 정리합니다.  
+    MAPF 등 로보틱스 관련 논문을 다룹니다.
+
+    [:octicons-arrow-right-24: 바로가기](papers/index.md)
+
 </div>
 
 ---
