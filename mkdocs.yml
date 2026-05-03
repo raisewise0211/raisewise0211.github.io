@@ -43,5 +43,7 @@ nav:
       - 벡터와 행렬: math/linear-algebra/vector-matrix.md
   - Papers:
     - Overview: papers/index.md
-    - MAPF: papers/mapf/index.md
+    - MAPF:
+      - Overview: papers/mapf/index.md
+      - LaCAM: papers/mapf/lacam.md
 
