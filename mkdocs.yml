@@ -52,4 +52,7 @@ nav:
       - Overview: papers/mapf/index.md
       - LaCAM: papers/mapf/lacam.md
       - PIBT: papers/mapf/pibt.md
+    - VLA:
+      - Overview: papers/vla/index.md
+      - OpenVLA: papers/vla/openvla.md
 

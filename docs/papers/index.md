@@ -17,4 +17,12 @@
 
     [:octicons-arrow-right-24: 바로가기](mapf/index.md)
 
+-   **VLA** (Vision-Language-Action Models)
+
+    ---
+
+    Vision-Language Model을 로봇 제어에 직접 연결한 end-to-end 정책 모델.
+
+    [:octicons-arrow-right-24: 바로가기](vla/index.md)
+
 </div>
