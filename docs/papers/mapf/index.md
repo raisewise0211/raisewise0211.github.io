@@ -10,6 +10,7 @@
 | 논문 | 저자 | 연도 | 한 줄 요약 |
 |------|------|------|------------|
 | [LaCAM](lacam.md) | Okumura | 2023 | Lazy 2단계 탐색으로 수만 에이전트 MAPF를 빠르게 푸는 complete 알고리즘 |
+| [PIBT](pibt.md) | Okumura et al. | 2019 | 동적 우선순위 + priority inheritance + backtracking으로 iterative MAPF를 매 timestep 단위로 해결 |
 
 ---
 
