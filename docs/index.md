@@ -1,17 +1,40 @@
-# Welcome to MkDocs
+# Robotics Notes
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+공부한 것을 기록하고, 정리하고, 공유합니다.
 
-## Commands
+---
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## 이 사이트는
 
-## Project layout
+로보틱스를 공부하면서 배운 것들을 직접 정리한 노트입니다.
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+수업 자료나 교재를 읽고 이해한 내용을 내 언어로 다시 써보는 과정에서  
+개념이 더 단단해진다는 걸 경험했습니다. 그 기록을 남기는 공간입니다.
+
+나를 위해 시작했지만, 같은 길을 걷는 누군가에게도 닿길 바랍니다.  
+완성된 교재가 아니라, 계속 채워가는 살아있는 노트입니다.
+
+---
+
+## 둘러보기
+
+관심 있는 주제를 골라 바로 들어가면 됩니다.
+
+<div class="grid cards" markdown>
+
+-   **수학** (Mathematics)
+
+    ---
+
+    로보틱스의 언어. 선형대수, 기하학, 미적분, 확률론을 다룹니다.  
+    이 섹션이 모든 것의 기반입니다.
+
+    [:octicons-arrow-right-24: 바로가기](math/index.md)
+
+</div>
+
+---
+
+!!! note "참고"
+    섹션은 앞으로 계속 추가될 예정입니다.  
+    지금은 수학부터 시작합니다.
