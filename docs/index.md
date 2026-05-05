@@ -1,24 +1,31 @@
+<div class="hero" markdown>
+
 # Robotics Notes
 
-공부한 것을 기록하고, 정리하고, 공유합니다.
+로보틱스를 공부하며 직접 쌓아가는 살아있는 노트.  
+수학부터 논문까지, 이해한 것을 내 언어로 다시 씁니다.
 
----
+[수학 보러가기](math/index.md){ .md-button .md-button--primary }
+[논문 보러가기](papers/index.md){ .md-button }
 
-## 이 사이트는
+</div>
 
-로보틱스를 공부하면서 배운 것들을 직접 정리한 노트입니다.
-
-수업 자료나 교재를 읽고 이해한 내용을 내 언어로 다시 써보는 과정에서  
-개념이 더 단단해진다는 걸 경험했습니다. 그 기록을 남기는 공간입니다.
-
-나를 위해 시작했지만, 같은 길을 걷는 누군가에게도 닿길 바랍니다.  
-완성된 교재가 아니라, 계속 채워가는 살아있는 노트입니다.
-
----
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-number">2</span>
+    <span class="stat-label">수학 챕터</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">3</span>
+    <span class="stat-label">논문 리뷰</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">∞</span>
+    <span class="stat-label">계속 업데이트</span>
+  </div>
+</div>
 
 ## 둘러보기
-
-관심 있는 주제를 골라 바로 들어가면 됩니다.
 
 <div class="grid cards" markdown>
 
@@ -26,7 +33,7 @@
 
     ---
 
-    로보틱스의 언어. 선형대수, 기하학, 미적분, 확률론을 다룹니다.  
+    로보틱스를 다루면서 필요한 수학을 다룹니다.  
     이 섹션이 모든 것의 기반입니다.
 
     [:octicons-arrow-right-24: 바로가기](math/index.md)
@@ -35,8 +42,7 @@
 
     ---
 
-    읽은 논문을 주제별로 정리합니다.  
-    MAPF 등 로보틱스 관련 논문을 다룹니다.
+    로보틱스 관련 논문을 읽고, 리뷰합니다.
 
     [:octicons-arrow-right-24: 바로가기](papers/index.md)
 
@@ -44,6 +50,27 @@
 
 ---
 
-!!! note "참고"
-    섹션은 앞으로 계속 추가될 예정입니다.  
-    지금은 수학부터 시작합니다.
+## 최근 업데이트
+
+<ul class="recent-list">
+  <li>
+    <span class="recent-date">2026-05-05</span>
+    <span class="recent-tag">수학</span>
+    <a href="math/kinematics/mobile-robot/">모바일 로봇 기구학</a>
+  </li>
+  <li>
+    <span class="recent-date">2026-05-05</span>
+    <span class="recent-tag">논문</span>
+    <a href="papers/vla/openvla/">OpenVLA 리뷰</a>
+  </li>
+  <li>
+    <span class="recent-date">2026-05-04</span>
+    <span class="recent-tag">논문</span>
+    <a href="papers/mapf/pibt/">PIBT 리뷰</a>
+  </li>
+  <li>
+    <span class="recent-date">2026-05-04</span>
+    <span class="recent-tag">논문</span>
+    <a href="papers/mapf/lacam/">LaCAM 리뷰</a>
+  </li>
+</ul>
