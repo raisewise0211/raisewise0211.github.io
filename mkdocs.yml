@@ -46,6 +46,9 @@ nav:
     - Overview: math/index.md
     - Linear Algebra:
       - 벡터와 행렬: math/linear-algebra/vector-matrix.md
+    - Kinematics:
+      - Overview: math/kinematics/index.md
+      - 모바일 로봇 기구학: math/kinematics/mobile-robot.md
   - Papers:
     - Overview: papers/index.md
     - MAPF:
