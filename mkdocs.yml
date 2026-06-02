@@ -67,4 +67,5 @@ nav:
     - Overview: ros2/index.md
     - Nav2:
       - MPPI Controller: ros2/nav2/mppi-controller.md
+      - Lifecycle Manager: ros2/nav2/lifecycle-manager.md
 

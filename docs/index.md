@@ -21,7 +21,7 @@
     <span class="stat-label">논문 리뷰</span>
   </div>
   <div class="stat">
-    <span class="stat-number">1</span>
+    <span class="stat-number">2</span>
     <span class="stat-label">ROS2 분석</span>
   </div>
   <div class="stat">
@@ -66,6 +66,11 @@
 ## 최근 업데이트
 
 <ul class="recent-list">
+  <li>
+    <span class="recent-date">2026-06-02</span>
+    <span class="recent-tag">ROS2</span>
+    <a href="ros2/nav2/lifecycle-manager/">Nav2 Lifecycle Manager 분석</a>
+  </li>
   <li>
     <span class="recent-date">2026-06-02</span>
     <span class="recent-tag">ROS2</span>

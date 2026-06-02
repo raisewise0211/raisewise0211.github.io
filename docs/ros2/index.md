@@ -18,5 +18,6 @@ ROS2는 로봇 소프트웨어를 만드는 미들웨어이자 생태계다.
     경로 계획, 경로 추종, 복구 행동을 플러그인 구조로 제공한다.
 
     [:octicons-arrow-right-24: MPPI Controller](nav2/mppi-controller.md)
+    [:octicons-arrow-right-24: Lifecycle Manager](nav2/lifecycle-manager.md)
 
 </div>
