@@ -63,4 +63,8 @@ nav:
     - VLA:
       - Overview: papers/vla/index.md
       - OpenVLA: papers/vla/openvla.md
+  - ROS2:
+    - Overview: ros2/index.md
+    - Nav2:
+      - MPPI Controller: ros2/nav2/mppi-controller.md
 

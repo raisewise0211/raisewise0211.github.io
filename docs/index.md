@@ -7,6 +7,7 @@
 
 [수학 보러가기](math/index.md){ .md-button .md-button--primary }
 [논문 보러가기](papers/index.md){ .md-button }
+[ROS2 보러가기](ros2/index.md){ .md-button }
 
 </div>
 
@@ -18,6 +19,10 @@
   <div class="stat">
     <span class="stat-number">3</span>
     <span class="stat-label">논문 리뷰</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">1</span>
+    <span class="stat-label">ROS2 분석</span>
   </div>
   <div class="stat">
     <span class="stat-number">∞</span>
@@ -46,6 +51,14 @@
 
     [:octicons-arrow-right-24: 바로가기](papers/index.md)
 
+-   **ROS2** (Robot Operating System 2)
+
+    ---
+
+    ROS2 프레임워크와 패키지의 내부 동작을 코드 수준에서 분석합니다.
+
+    [:octicons-arrow-right-24: 바로가기](ros2/index.md)
+
 </div>
 
 ---
@@ -53,6 +66,11 @@
 ## 최근 업데이트
 
 <ul class="recent-list">
+  <li>
+    <span class="recent-date">2026-06-02</span>
+    <span class="recent-tag">ROS2</span>
+    <a href="ros2/nav2/mppi-controller/">Nav2 MPPI Controller 분석</a>
+  </li>
   <li>
     <span class="recent-date">2026-05-05</span>
     <span class="recent-tag">수학</span>
