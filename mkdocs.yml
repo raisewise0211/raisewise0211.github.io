@@ -68,4 +68,10 @@ nav:
     - Nav2:
       - MPPI Controller: ros2/nav2/mppi-controller.md
       - Lifecycle Manager: ros2/nav2/lifecycle-manager.md
+    - Isaac ROS Cloud Control:
+      - Overview: ros2/cloud-control/index.md
+      - Mission Client: ros2/cloud-control/mission-client.md
+      - Action Handlers: ros2/cloud-control/action-handlers.md
+      - MQTT Bridge: ros2/cloud-control/mqtt-bridge.md
+      - 보조 패키지: ros2/cloud-control/supporting-packages.md
 
