@@ -67,6 +67,7 @@ nav:
     - Overview: ros2/index.md
     - DDS:
       - 세션 1 - 왜 DDS인가?: ros2/dds/session-01-why-dds.md
+      - 세션 2 - DCPS & Discovery: ros2/dds/session-02-dcps-discovery.md
     - Nav2:
       - MPPI Controller: ros2/nav2/mppi-controller.md
       - Lifecycle Manager: ros2/nav2/lifecycle-manager.md
