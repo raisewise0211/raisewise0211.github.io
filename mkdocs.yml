@@ -65,6 +65,8 @@ nav:
       - OpenVLA: papers/vla/openvla.md
   - ROS2:
     - Overview: ros2/index.md
+    - DDS:
+      - 세션 1 - 왜 DDS인가?: ros2/dds/session-01-why-dds.md
     - Nav2:
       - MPPI Controller: ros2/nav2/mppi-controller.md
       - Lifecycle Manager: ros2/nav2/lifecycle-manager.md
