@@ -20,6 +20,16 @@ ROS2는 로봇 소프트웨어를 만드는 미들웨어이자 생태계다.
     [:octicons-arrow-right-24: MPPI Controller](nav2/mppi-controller.md)
     [:octicons-arrow-right-24: Lifecycle Manager](nav2/lifecycle-manager.md)
 
+-   **DDS** (Data Distribution Service)
+
+    ---
+
+    ROS2 통신의 핵심 미들웨어 표준.
+    rosmaster 없는 분산 발견, QoS 정책, RTPS 전송 계층, 멀티머신 네트워킹까지
+    이론을 세션 단위로 정리한다.
+
+    [:octicons-arrow-right-24: 세션 1 - 왜 DDS인가?](dds/session-01-why-dds.md)
+
 -   **Isaac ROS Cloud Control**
 
     ---
