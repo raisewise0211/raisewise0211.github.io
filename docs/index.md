@@ -21,7 +21,7 @@
     <span class="stat-label">논문 리뷰</span>
   </div>
   <div class="stat">
-    <span class="stat-number">2</span>
+    <span class="stat-number">6</span>
     <span class="stat-label">ROS2 분석</span>
   </div>
   <div class="stat">
@@ -66,6 +66,26 @@
 ## 최근 업데이트
 
 <ul class="recent-list">
+  <li>
+    <span class="recent-date">2026-06-18</span>
+    <span class="recent-tag">ROS2</span>
+    <a href="ros2/dds/session-04-qos/">DDS 세션 4 - QoS 정책 마스터</a>
+  </li>
+  <li>
+    <span class="recent-date">2026-06-18</span>
+    <span class="recent-tag">ROS2</span>
+    <a href="ros2/dds/session-03-rtps/">DDS 세션 3 - RTPS 프로토콜</a>
+  </li>
+  <li>
+    <span class="recent-date">2026-06-18</span>
+    <span class="recent-tag">ROS2</span>
+    <a href="ros2/dds/session-02-dcps-discovery/">DDS 세션 2 - DCPS & Discovery</a>
+  </li>
+  <li>
+    <span class="recent-date">2026-06-18</span>
+    <span class="recent-tag">ROS2</span>
+    <a href="ros2/dds/session-01-why-dds/">DDS 세션 1 - 왜 DDS인가?</a>
+  </li>
   <li>
     <span class="recent-date">2026-06-02</span>
     <span class="recent-tag">ROS2</span>
