@@ -30,6 +30,8 @@ ROS2는 로봇 소프트웨어를 만드는 미들웨어이자 생태계다.
 
     [:octicons-arrow-right-24: 세션 1 - 왜 DDS인가?](dds/session-01-why-dds.md)
     [:octicons-arrow-right-24: 세션 2 - DCPS & Discovery](dds/session-02-dcps-discovery.md)
+    [:octicons-arrow-right-24: 세션 3 - RTPS 프로토콜](dds/session-03-rtps.md)
+    [:octicons-arrow-right-24: 세션 4 - QoS 정책 마스터](dds/session-04-qos.md)
 
 -   **Isaac ROS Cloud Control**
 
