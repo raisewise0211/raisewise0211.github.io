@@ -34,6 +34,10 @@ ROS2는 로봇 소프트웨어를 만드는 미들웨어이자 생태계다.
     [:octicons-arrow-right-24: 세션 4 - QoS 정책 마스터](dds/session-04-qos.md)
     [:octicons-arrow-right-24: 세션 5 - rmw 레이어](dds/session-05-rmw.md)
     [:octicons-arrow-right-24: 세션 6 - Domain ID & Namespace](dds/session-06-domain-namespace.md)
+    [:octicons-arrow-right-24: 세션 7 - DDS XML Profile](dds/session-07-xml-profile.md)
+    [:octicons-arrow-right-24: 세션 8 - 멀티머신 네트워킹](dds/session-08-multimachine.md)
+    [:octicons-arrow-right-24: 세션 9 - SROS2 보안](dds/session-09-security.md)
+    [:octicons-arrow-right-24: 세션 10 - 전체 통합 & 실전 시나리오](dds/session-10-integration.md)
 
 -   **Isaac ROS Cloud Control**
 

@@ -72,6 +72,10 @@ nav:
       - 세션 4 - QoS 정책 마스터: ros2/dds/session-04-qos.md
       - 세션 5 - rmw 레이어: ros2/dds/session-05-rmw.md
       - 세션 6 - Domain ID & Namespace: ros2/dds/session-06-domain-namespace.md
+      - 세션 7 - DDS XML Profile: ros2/dds/session-07-xml-profile.md
+      - 세션 8 - 멀티머신 네트워킹: ros2/dds/session-08-multimachine.md
+      - 세션 9 - SROS2 보안: ros2/dds/session-09-security.md
+      - 세션 10 - 전체 통합 & 실전 시나리오: ros2/dds/session-10-integration.md
     - Nav2:
       - MPPI Controller: ros2/nav2/mppi-controller.md
       - Lifecycle Manager: ros2/nav2/lifecycle-manager.md

@@ -21,7 +21,7 @@
     <span class="stat-label">논문 리뷰</span>
   </div>
   <div class="stat">
-    <span class="stat-number">8</span>
+    <span class="stat-number">12</span>
     <span class="stat-label">ROS2 분석</span>
   </div>
   <div class="stat">
@@ -66,6 +66,26 @@
 ## 최근 업데이트
 
 <ul class="recent-list">
+  <li>
+    <span class="recent-date">2026-06-19</span>
+    <span class="recent-tag">ROS2</span>
+    <a href="ros2/dds/session-10-integration/">DDS 세션 10 - 전체 통합 & 실전 시나리오 (학습 완료)</a>
+  </li>
+  <li>
+    <span class="recent-date">2026-06-19</span>
+    <span class="recent-tag">ROS2</span>
+    <a href="ros2/dds/session-09-security/">DDS 세션 9 - SROS2 보안</a>
+  </li>
+  <li>
+    <span class="recent-date">2026-06-19</span>
+    <span class="recent-tag">ROS2</span>
+    <a href="ros2/dds/session-08-multimachine/">DDS 세션 8 - 멀티머신 네트워킹</a>
+  </li>
+  <li>
+    <span class="recent-date">2026-06-19</span>
+    <span class="recent-tag">ROS2</span>
+    <a href="ros2/dds/session-07-xml-profile/">DDS 세션 7 - DDS XML Profile</a>
+  </li>
   <li>
     <span class="recent-date">2026-06-19</span>
     <span class="recent-tag">ROS2</span>
