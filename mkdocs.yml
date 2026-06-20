@@ -17,9 +17,16 @@ theme:
     code: JetBrains Mono
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
-    - toc.integrate
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - toc.follow
     - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
 
 markdown_extensions:
   - pymdownx.arithmatex:
