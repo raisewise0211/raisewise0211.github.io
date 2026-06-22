@@ -28,6 +28,7 @@ ROS2는 로봇 소프트웨어를 만드는 미들웨어이자 생태계다.
     rosmaster 없는 분산 발견, QoS 정책, RTPS 전송 계층, 멀티머신 네트워킹까지
     이론을 세션 단위로 정리한다.
 
+    <span class="session-grid" markdown="1">
     [:octicons-arrow-right-24: 세션 1 - 왜 DDS인가?](dds/session-01-why-dds.md)
     [:octicons-arrow-right-24: 세션 2 - DCPS & Discovery](dds/session-02-dcps-discovery.md)
     [:octicons-arrow-right-24: 세션 3 - RTPS 프로토콜](dds/session-03-rtps.md)
@@ -38,6 +39,7 @@ ROS2는 로봇 소프트웨어를 만드는 미들웨어이자 생태계다.
     [:octicons-arrow-right-24: 세션 8 - 멀티머신 네트워킹](dds/session-08-multimachine.md)
     [:octicons-arrow-right-24: 세션 9 - SROS2 보안](dds/session-09-security.md)
     [:octicons-arrow-right-24: 세션 10 - 전체 통합 & 실전 시나리오](dds/session-10-integration.md)
+    </span>
 
 -   **Isaac ROS Cloud Control**
 
