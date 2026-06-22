@@ -198,3 +198,5 @@ Discovery 단계 (SEDP)
 - Reliability, Durability, History 핵심 정책
 - Deadline, Liveliness, Lifespan 실시간 정책
 - QoS 호환성 매트릭스
+
+[다음 세션 → 세션 4 · QoS 정책 마스터](session-04-qos.md){ .md-button .md-button--primary }

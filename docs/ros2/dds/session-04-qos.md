@@ -226,3 +226,5 @@ DataWriter가 데이터 발행
 - rmw(ROS Middleware Interface) 추상화 계층 구조
 - Fast DDS vs CycloneDDS 비교
 - RMW_IMPLEMENTATION 환경변수
+
+[다음 세션 → 세션 5 · rmw 레이어](session-05-rmw.md){ .md-button .md-button--primary }

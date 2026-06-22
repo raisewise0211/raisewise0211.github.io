@@ -28,17 +28,19 @@ ROS2는 로봇 소프트웨어를 만드는 미들웨어이자 생태계다.
     rosmaster 없는 분산 발견, QoS 정책, RTPS 전송 계층, 멀티머신 네트워킹까지
     이론을 세션 단위로 정리한다.
 
+    [:octicons-arrow-right-24: DDS Overview](dds/index.md)
+
     <span class="session-grid" markdown="1">
-    [:octicons-arrow-right-24: 왜 DDS인가?](dds/session-01-why-dds.md)
-    [:octicons-arrow-right-24: DCPS & Discovery](dds/session-02-dcps-discovery.md)
-    [:octicons-arrow-right-24: RTPS 프로토콜](dds/session-03-rtps.md)
-    [:octicons-arrow-right-24: QoS 정책 마스터](dds/session-04-qos.md)
-    [:octicons-arrow-right-24: rmw 레이어](dds/session-05-rmw.md)
-    [:octicons-arrow-right-24: Domain ID & Namespace](dds/session-06-domain-namespace.md)
-    [:octicons-arrow-right-24: DDS XML Profile](dds/session-07-xml-profile.md)
-    [:octicons-arrow-right-24: 멀티머신 네트워킹](dds/session-08-multimachine.md)
-    [:octicons-arrow-right-24: SROS2 보안](dds/session-09-security.md)
-    [:octicons-arrow-right-24: 전체 통합 & 실전 시나리오](dds/session-10-integration.md)
+    [왜 DDS인가?](dds/session-01-why-dds.md)
+    [DCPS & Discovery](dds/session-02-dcps-discovery.md)
+    [RTPS 프로토콜](dds/session-03-rtps.md)
+    [QoS 정책 마스터](dds/session-04-qos.md)
+    [rmw 레이어](dds/session-05-rmw.md)
+    [Domain & Namespace](dds/session-06-domain-namespace.md)
+    [DDS XML Profile](dds/session-07-xml-profile.md)
+    [멀티머신 네트워킹](dds/session-08-multimachine.md)
+    [SROS2 보안](dds/session-09-security.md)
+    [전체 통합 시나리오](dds/session-10-integration.md)
     </span>
 
 -   **Isaac ROS Cloud Control**

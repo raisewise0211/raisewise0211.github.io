@@ -161,3 +161,5 @@ rosmaster 방식 (중앙 집중)          DDS 방식 (분산)
 
 - `DomainParticipant`, `Publisher`, `DataWriter` 계층 구조
 - SPDP(참여자 발견) + SEDP(엔드포인트 발견) 동작 원리
+
+[다음 세션 → 세션 2 · DCPS & Discovery](session-02-dcps-discovery.md){ .md-button .md-button--primary }

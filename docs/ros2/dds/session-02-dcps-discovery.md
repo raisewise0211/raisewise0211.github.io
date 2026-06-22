@@ -312,3 +312,5 @@ EntityId 예약값
 - RTPS 패킷 구조: Message, Submessage
 - Reliable 전송 메커니즘: HEARTBEAT / ACKNACK
 - 멀티캐스트 vs 유니캐스트, Locator 개념
+
+[다음 세션 → 세션 3 · RTPS 프로토콜](session-03-rtps.md){ .md-button .md-button--primary }

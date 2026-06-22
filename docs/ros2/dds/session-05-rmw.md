@@ -281,3 +281,5 @@ Fast DDS / CycloneDDS SDK 호출
 - Domain ID로 논리적 네트워크 분리
 - ROS_DOMAIN_ID 설정, 포트 번호 공식
 - Namespace, remapping으로 토픽 충돌 방지
+
+[다음 세션 → 세션 6 · Domain ID & Namespace](session-06-domain-namespace.md){ .md-button .md-button--primary }

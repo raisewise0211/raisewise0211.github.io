@@ -223,3 +223,5 @@ ros2 run my_robot_pkg controller --ros-args -r cmd_vel:=/robot_a/drive_cmd
 - FASTRTPS_DEFAULT_PROFILES_FILE 환경변수, XML 구조
 - 유니캐스트 전용 설정 (클라우드/VPN 환경)
 - Initial Peers 설정
+
+[다음 세션 → 세션 7 · DDS XML Profile](session-07-xml-profile.md){ .md-button .md-button--primary }

@@ -99,6 +99,16 @@
   border-bottom: none;
 }
 
+/* 홈 최근 업데이트는 최신 5개만 노출 — 6번째 항목부터 자동으로 숨김.
+   새 항목은 docs/index.md의 .recent-list 맨 위에 수동으로 추가한다. */
+.recent-list li:nth-child(n+6) {
+  display: none;
+}
+
+.recent-list li:nth-child(5) {
+  border-bottom: none;
+}
+
 .recent-date {
   font-size: 0.78rem;
   color: var(--md-default-fg-color--light);
@@ -118,30 +128,64 @@
 }
 
 /* ── Wide cards (single column, full width) ──────────── */
-.wide-cards > ul {
+.md-typeset .grid.wide-cards,
+.md-typeset .grid.wide-cards > ul {
   grid-template-columns: 1fr !important;
 }
 
-/* ── Card session grid ────────────────────────────────── */
+/* ── Card session grid (2 rows × n columns) ──────────── */
 span.session-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.3rem 1.2rem;
-  margin-top: 0.5rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.4rem 1rem;
+  margin-top: 0.6rem;
 }
 
 span.session-grid a {
   display: block;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 6px;
+  text-align: center;
+}
+
+span.session-grid a:hover {
+  border-color: var(--md-primary-fg-color);
+  background: var(--md-code-bg-color);
 }
 
 @media screen and (max-width: 59.9375em) {
   span.session-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media screen and (max-width: 44.9375em) {
   span.session-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+/* ── Home only: hide sidebars/TOC, widen hero & content ─ */
+body:has(.hero) .md-sidebar {
+  display: none;
+}
+
+body:has(.hero) .md-main__inner {
+  margin-top: 0;
+}
+
+body:has(.hero) .md-content {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+body:has(.hero) .hero {
+  padding: 5rem 2rem;
+}
+
+body:has(.hero) .hero h1 {
+  font-size: 3.4rem;
 }

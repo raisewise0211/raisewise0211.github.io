@@ -254,3 +254,5 @@ Authentication 단계에서 거부
 - 전체 개념 지도 리뷰
 - 자율주행 로봇 함대 네트워크 설계
 - 성능 튜닝과 Discovery Server
+
+[다음 세션 → 세션 10 · 전체 통합 & 실전 시나리오](session-10-integration.md){ .md-button .md-button--primary }

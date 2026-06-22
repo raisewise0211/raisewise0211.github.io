@@ -221,3 +221,5 @@ ip addr show   # 멀티 인터페이스 환경에서 확인
 
 - DDS Security 5가지 플러그인
 - SROS2 keystore, Enclave, Permissions 파일
+
+[다음 세션 → 세션 9 · SROS2 보안](session-09-security.md){ .md-button .md-button--primary }

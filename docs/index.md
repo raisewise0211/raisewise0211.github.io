@@ -11,25 +11,6 @@
 
 </div>
 
-<div class="stats-bar">
-  <div class="stat">
-    <span class="stat-number">2</span>
-    <span class="stat-label">수학 챕터</span>
-  </div>
-  <div class="stat">
-    <span class="stat-number">3</span>
-    <span class="stat-label">논문 리뷰</span>
-  </div>
-  <div class="stat">
-    <span class="stat-number">12</span>
-    <span class="stat-label">ROS2 분석</span>
-  </div>
-  <div class="stat">
-    <span class="stat-number">∞</span>
-    <span class="stat-label">계속 업데이트</span>
-  </div>
-</div>
-
 ## 둘러보기
 
 <div class="grid cards" markdown>
@@ -90,60 +71,5 @@
     <span class="recent-date">2026-06-19</span>
     <span class="recent-tag">ROS2</span>
     <a href="ros2/dds/session-06-domain-namespace/">DDS 세션 6 - Domain ID & Namespace</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-06-19</span>
-    <span class="recent-tag">ROS2</span>
-    <a href="ros2/dds/session-05-rmw/">DDS 세션 5 - rmw 레이어</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-06-18</span>
-    <span class="recent-tag">ROS2</span>
-    <a href="ros2/dds/session-04-qos/">DDS 세션 4 - QoS 정책 마스터</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-06-18</span>
-    <span class="recent-tag">ROS2</span>
-    <a href="ros2/dds/session-03-rtps/">DDS 세션 3 - RTPS 프로토콜</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-06-18</span>
-    <span class="recent-tag">ROS2</span>
-    <a href="ros2/dds/session-02-dcps-discovery/">DDS 세션 2 - DCPS & Discovery</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-06-18</span>
-    <span class="recent-tag">ROS2</span>
-    <a href="ros2/dds/session-01-why-dds/">DDS 세션 1 - 왜 DDS인가?</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-06-02</span>
-    <span class="recent-tag">ROS2</span>
-    <a href="ros2/nav2/lifecycle-manager/">Nav2 Lifecycle Manager 분석</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-06-02</span>
-    <span class="recent-tag">ROS2</span>
-    <a href="ros2/nav2/mppi-controller/">Nav2 MPPI Controller 분석</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-05-05</span>
-    <span class="recent-tag">수학</span>
-    <a href="math/kinematics/mobile-robot/">모바일 로봇 기구학</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-05-05</span>
-    <span class="recent-tag">논문</span>
-    <a href="papers/vla/openvla/">OpenVLA 리뷰</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-05-04</span>
-    <span class="recent-tag">논문</span>
-    <a href="papers/mapf/pibt/">PIBT 리뷰</a>
-  </li>
-  <li>
-    <span class="recent-date">2026-05-04</span>
-    <span class="recent-tag">논문</span>
-    <a href="papers/mapf/lacam/">LaCAM 리뷰</a>
   </li>
 </ul>

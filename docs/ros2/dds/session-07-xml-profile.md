@@ -237,3 +237,5 @@ export CYCLONEDDS_URI=file:///path/to/cyclonedds.xml
 
 - 같은 서브넷 vs 다른 서브넷/VPN 통신 구성
 - 방화벽 포트 규칙, Wireshark 디버깅
+
+[다음 세션 → 세션 8 · 멀티머신 네트워킹](session-08-multimachine.md){ .md-button .md-button--primary }
