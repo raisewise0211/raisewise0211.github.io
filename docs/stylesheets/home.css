@@ -117,16 +117,27 @@
   font-weight: 600;
 }
 
-/* ── Card session grid (2 columns) ───────────────────── */
+/* ── Wide cards (single column, full width) ──────────── */
+.wide-cards > ul {
+  grid-template-columns: 1fr !important;
+}
+
+/* ── Card session grid ────────────────────────────────── */
 span.session-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.3rem 1.2rem;
   margin-top: 0.5rem;
 }
 
 span.session-grid a {
   display: block;
+}
+
+@media screen and (max-width: 59.9375em) {
+  span.session-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media screen and (max-width: 44.9375em) {

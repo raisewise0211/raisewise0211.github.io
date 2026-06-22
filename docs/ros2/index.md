@@ -8,7 +8,7 @@ ROS2는 로봇 소프트웨어를 만드는 미들웨어이자 생태계다.
 
 ## 구성
 
-<div class="grid cards" markdown>
+<div class="grid cards wide-cards" markdown>
 
 -   **Nav2** (Navigation2)
 
