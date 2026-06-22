@@ -1,4 +1,4 @@
-# 세션 1: 왜 DDS인가? — ROS1 vs ROS2 아키텍처
+# 왜 DDS인가? — ROS1 vs ROS2 아키텍처
 
     - **핵심 목표**: DDS가 존재하는 이유와 ROS2 전체 레이어 구조 파악
     - **관련 표준**: OMG DDS 1.4, RTPS 2.3

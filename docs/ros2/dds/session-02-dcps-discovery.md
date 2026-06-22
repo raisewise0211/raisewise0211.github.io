@@ -1,4 +1,4 @@
-# 세션 2: DDS 핵심 모델 — DCPS & Discovery
+# DDS 핵심 모델 — DCPS & Discovery
 
 !!! info "세션 정보"
     - **학습 시간**: 2시간 (학습 1h 45m + 복습 15m)

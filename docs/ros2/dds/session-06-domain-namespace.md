@@ -1,4 +1,4 @@
-# 세션 6: 네트워크 분리 — Domain ID & Namespace
+# 네트워크 분리 — Domain ID & Namespace
 
 !!! info "세션 정보"
     - **학습 시간**: 2시간 (학습 1h 45m + 복습 15m)

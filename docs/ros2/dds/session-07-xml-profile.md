@@ -1,4 +1,4 @@
-# 세션 7: DDS 설정 파일 (XML Profile)
+# DDS 설정 파일 (XML Profile)
 
 !!! info "세션 정보"
     - **학습 시간**: 2시간 (학습 1h 45m + 복습 15m)
