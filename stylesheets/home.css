@@ -1,0 +1,191 @@
+/* ── Hero ───────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #1565c0 0%, #283593 100%);
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  color: #ffffff !important;
+  font-size: 2.8rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-size: 1.1rem;
+  margin-bottom: 1.8rem;
+}
+
+.hero .md-button {
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #ffffff;
+}
+
+.hero .md-button--primary {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #1565c0;
+}
+
+.hero .md-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.hero .md-button--primary:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+[data-md-color-scheme="slate"] .hero {
+  background: linear-gradient(135deg, #0d47a1 0%, #1a237e 100%);
+}
+
+[data-md-color-scheme="slate"] .hero .md-button--primary {
+  color: #0d47a1;
+}
+
+/* ── Stats bar ──────────────────────────────────────── */
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.5rem 1rem;
+  background: var(--md-code-bg-color);
+  border-radius: 10px;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  text-align: center;
+  min-width: 80px;
+}
+
+.stat-number {
+  display: block;
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--md-primary-fg-color);
+  margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--md-default-fg-color--light);
+  letter-spacing: 0.02em;
+}
+
+/* ── Recent updates ─────────────────────────────────── */
+.recent-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.recent-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.recent-list li:last-child {
+  border-bottom: none;
+}
+
+/* 홈 최근 업데이트는 최신 5개만 노출 — 6번째 항목부터 자동으로 숨김.
+   새 항목은 docs/index.md의 .recent-list 맨 위에 수동으로 추가한다. */
+.recent-list li:nth-child(n+6) {
+  display: none;
+}
+
+.recent-list li:nth-child(5) {
+  border-bottom: none;
+}
+
+.recent-date {
+  font-size: 0.78rem;
+  color: var(--md-default-fg-color--light);
+  white-space: nowrap;
+  min-width: 85px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.recent-tag {
+  font-size: 0.72rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 4px;
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* ── Wide cards (single column, full width) ──────────── */
+.md-typeset .grid.wide-cards,
+.md-typeset .grid.wide-cards > ul {
+  grid-template-columns: 1fr !important;
+}
+
+/* ── Card session grid (2 rows × n columns) ──────────── */
+span.session-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.4rem 1rem;
+  margin-top: 0.6rem;
+}
+
+span.session-grid a {
+  display: block;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 6px;
+  text-align: center;
+}
+
+span.session-grid a:hover {
+  border-color: var(--md-primary-fg-color);
+  background: var(--md-code-bg-color);
+}
+
+@media screen and (max-width: 59.9375em) {
+  span.session-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 44.9375em) {
+  span.session-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ── Home only: hide sidebars/TOC, widen hero & content ─ */
+body:has(.hero) .md-sidebar {
+  display: none;
+}
+
+body:has(.hero) .md-main__inner {
+  margin-top: 0;
+}
+
+body:has(.hero) .md-content {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+body:has(.hero) .hero {
+  padding: 5rem 2rem;
+}
+
+body:has(.hero) .hero h1 {
+  font-size: 3.4rem;
+}

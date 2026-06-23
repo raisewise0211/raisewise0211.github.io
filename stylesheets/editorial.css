@@ -1,0 +1,161 @@
+/* ============================================================
+   editorial.css
+   Ports the "studylog" editorial / monochrome look onto your
+   existing Material for MkDocs site (Robotics Notes).
+
+   Install:
+   1. Save this file as:  docs/stylesheets/editorial.css
+   2. In mkdocs.yml, add it to extra_css (keep your existing ones):
+        extra_css:
+          - https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css
+          - stylesheets/fonts.css
+          - stylesheets/home.css
+          - stylesheets/editorial.css     # <-- add last so it wins
+   3. Rebuild:  mkdocs serve
+
+   This only restyles. It keeps Material's tabs + sidebar + TOC,
+   built-in search, code-copy buttons, MathJax and DataTables.
+   ============================================================ */
+
+/* Korean-capable serif for headings (editorial feel; Newsreader has no Hangul) */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&display=swap');
+
+/* ---------- LIGHT scheme ---------- */
+[data-md-color-scheme="default"] {
+  --md-default-bg-color:           #faf9f7;
+  --md-default-fg-color:           #1c1b19;
+  --md-default-fg-color--light:    #4a463f;
+  --md-default-fg-color--lighter:  #76726b;
+  --md-default-fg-color--lightest: #e5e2dc;
+
+  --md-primary-fg-color:           #faf9f7;  /* header bg */
+  --md-primary-fg-color--light:    #faf9f7;
+  --md-primary-fg-color--dark:     #faf9f7;
+  --md-primary-bg-color:           #1c1b19;  /* header text */
+  --md-primary-bg-color--light:    #76726b;
+
+  --md-accent-fg-color:            #1c1b19;
+  --md-typeset-a-color:            #1c1b19;
+
+  --md-code-bg-color:              #f3f1ec;
+  --md-code-fg-color:              #2a2825;
+}
+
+/* ---------- DARK scheme (slate) ---------- */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color:           #16150f;
+  --md-default-fg-color:           #ece9e1;
+  --md-default-fg-color--light:    #b6b1a4;
+  --md-default-fg-color--lighter:  #847f73;
+  --md-default-fg-color--lightest: #2a2820;
+
+  --md-primary-fg-color:           #16150f;
+  --md-primary-bg-color:           #ece9e1;
+  --md-primary-bg-color--light:    #b6b1a4;
+
+  --md-accent-fg-color:            #ece9e1;
+  --md-typeset-a-color:            #ece9e1;
+
+  --md-code-bg-color:              #1d1c15;
+  --md-code-fg-color:              #ddd9cf;
+}
+
+/* ---------- Header + tabs: flat, hairline, no shadow ---------- */
+.md-header {
+  background-color: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  box-shadow: none;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-header[data-md-state="shadow"] { box-shadow: none; }
+.md-tabs {
+  background-color: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-tabs__link { opacity: .7; }
+.md-tabs__link--active,
+.md-tabs__link:hover { opacity: 1; }
+
+/* ---------- Editorial serif headings ---------- */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  font-family: 'Noto Serif KR', 'Newsreader', Georgia, serif;
+  color: var(--md-default-fg-color);
+  letter-spacing: -0.01em;
+}
+.md-typeset h1 { font-weight: 500; line-height: 1.12; }
+.md-typeset h2 {
+  font-weight: 600;
+  margin-top: 2.4em;
+  padding-bottom: .3em;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-typeset h3 { font-weight: 600; }
+
+/* ---------- Reading measure + rhythm ---------- */
+.md-typeset {
+  font-size: .8rem;
+  line-height: 1.75;
+}
+
+/* ---------- Links: restrained underline ---------- */
+.md-typeset a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--md-default-fg-color--lightest);
+  transition: text-decoration-color .15s;
+}
+.md-typeset a:hover { text-decoration-color: currentColor; }
+
+/* ---------- Code: bordered, soft corners ---------- */
+.md-typeset pre > code {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+}
+.md-typeset code { border-radius: 4px; }
+.highlight .filename,
+.md-typeset .tabbed-labels { font-family: var(--md-code-font, monospace); }
+
+/* ---------- Tables (incl. DataTables): hairline ---------- */
+.md-typeset table:not([class]),
+.md-typeset .dataTables_wrapper table {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: .72rem;
+}
+.md-typeset table:not([class]) th {
+  background: var(--md-code-bg-color);
+  font-weight: 600;
+}
+
+/* ---------- Admonitions: flatter ---------- */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 8px;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+/* ---------- Blockquotes: editorial rule ---------- */
+.md-typeset blockquote {
+  border-left: 2px solid var(--md-default-fg-color);
+  color: var(--md-default-fg-color--light);
+  font-style: italic;
+}
+
+/* ---------- Search field: hairline ---------- */
+.md-search__form {
+  background-color: var(--md-code-bg-color);
+  box-shadow: none;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 6px;
+}
+.md-search__form:hover { background-color: var(--md-code-bg-color); }
+
+/* ---------- Footer ---------- */
+.md-footer { background-color: var(--md-default-fg-color); }
+.md-footer-meta { background-color: var(--md-default-fg-color); }

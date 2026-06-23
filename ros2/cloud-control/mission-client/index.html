@@ -1,0 +1,3214 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://raisewise0211.github.io/ros2/cloud-control/mission-client/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../action-handlers/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Mission Client - Robotics Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans+KR:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans KR";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/fonts.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/home.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/editorial.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mission-client-vda5050-client" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Robotics Notes" class="md-header__button md-logo" aria-label="Robotics Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robotics Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mission Client
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../math/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../papers/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Papers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  ROS2
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Robotics Notes" class="md-nav__button md-logo" aria-label="Robotics Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robotics Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../math/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linear Algebra
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/linear-algebra/vector-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    벡터와 행렬
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../math/kinematics/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kinematics
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kinematics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/kinematics/mobile-robot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모바일 로봇 기구학
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../papers/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Papers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../papers/mapf/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MAPF
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MAPF
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../papers/mapf/lacam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LaCAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../papers/mapf/pibt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PIBT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../papers/vla/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VLA
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    VLA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../papers/vla/openvla/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenVLA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS2
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ROS2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../dds/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DDS
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DDS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-01-why-dds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 1 · 왜 DDS인가?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-02-dcps-discovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 2 · DCPS & Discovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-03-rtps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 3 · RTPS 프로토콜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-04-qos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 4 · QoS 정책 마스터
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-05-rmw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 5 · rmw 레이어
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-06-domain-namespace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 6 · Domain ID & Namespace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-07-xml-profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 7 · DDS XML Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-08-multimachine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 8 · 멀티머신 네트워킹
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-09-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 9 · SROS2 보안
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-10-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 10 · 전체 통합 & 실전 시나리오
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nav2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nav2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nav2/mppi-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MPPI Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nav2/lifecycle-manager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lifecycle Manager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Isaac ROS Cloud Control
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Isaac ROS Cloud Control
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mission Client
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mission Client
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        한 줄 요약
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        패키지 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        전체 파일 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        각 파일 역할
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="각 파일 역할">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vda5050_client_maincpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vda5050_client_main.cpp — 진입점
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vda5050_client_nodehpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vda5050_client_node.hpp — 선언부
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vda5050_client_nodecpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vda5050_client_node.cpp — 본체
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="vda5050_client_node.cpp — 본체">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        생성자가 하는 일
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        주요 콜백 / 메서드
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        주요 멤버 변수
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        핵심 알고리즘
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="핵심 알고리즘">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 상태기계 — 두 타이머의 협력
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-vda5050" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 액션 블로킹 처리 (VDA5050 핵심 규칙)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-navigatethroughposes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. NavigateThroughPoses — 구간 묶기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 액션 핸들러 디스패치 (확장 메커니즘)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 취소 / 일시정지 핸드셰이크
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        클래스 내부 연계 도식도
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        주요 파라미터
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROS 2 인터페이스
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ROS 2 인터페이스">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subscribers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        구독 (Subscribers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        발행 (Publishers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        액션 클라이언트 / 서비스 클라이언트
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        커스텀 활용 방향
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="커스텀 활용 방향">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 1: 새 작업 타입 추가
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 2: 비주행형 로봇(매니퓰레이터/컨베이어)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-nav2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 3: Nav2 준비 게이팅
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        참고 자료 (References)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../action-handlers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Action Handlers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mqtt-bridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MQTT Bridge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supporting-packages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    보조 패키지
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        한 줄 요약
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        패키지 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        전체 파일 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        각 파일 역할
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="각 파일 역할">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vda5050_client_maincpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vda5050_client_main.cpp — 진입점
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vda5050_client_nodehpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vda5050_client_node.hpp — 선언부
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vda5050_client_nodecpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vda5050_client_node.cpp — 본체
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="vda5050_client_node.cpp — 본체">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        생성자가 하는 일
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        주요 콜백 / 메서드
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        주요 멤버 변수
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        핵심 알고리즘
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="핵심 알고리즘">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 상태기계 — 두 타이머의 협력
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-vda5050" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 액션 블로킹 처리 (VDA5050 핵심 규칙)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-navigatethroughposes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. NavigateThroughPoses — 구간 묶기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 액션 핸들러 디스패치 (확장 메커니즘)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 취소 / 일시정지 핸드셰이크
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        클래스 내부 연계 도식도
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        주요 파라미터
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROS 2 인터페이스
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ROS 2 인터페이스">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subscribers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        구독 (Subscribers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        발행 (Publishers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        액션 클라이언트 / 서비스 클라이언트
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        커스텀 활용 방향
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="커스텀 활용 방향">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 1: 새 작업 타입 추가
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 2: 비주행형 로봇(매니퓰레이터/컨베이어)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-nav2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 3: Nav2 준비 게이팅
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        참고 자료 (References)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="mission-client-vda5050-client">Mission Client (VDA5050 Client)</h1>
+<div class="admonition info">
+<p class="admonition-title">패키지 정보</p>
+<ul>
+<li><strong>패키지</strong>: <code>isaac_ros_vda5050_client</code></li>
+<li><strong>역할</strong>: VDA5050 주문/즉시명령을 받아 Nav2 주행 + 액션 핸들러로 실행하는 Mission Client 본체</li>
+<li><strong>노드 타입</strong>: <code>rclcpp::Node</code> (컴포넌트로도 등록)</li>
+<li><strong>핵심 클래스</strong>: <code>isaac_ros::mission_client::Vda5050ClientNode</code></li>
+<li><strong>핵심 의존성</strong>: <code>nav2_msgs</code>, <code>vda5050_msgs</code>, <code>pluginlib</code>, <code>tf2_ros</code>, <code>vda5050_action_handler</code></li>
+</ul>
+</div>
+<hr />
+<h2 id="_1">한 줄 요약</h2>
+<blockquote>
+<p>3개 상태(<code>IDLE</code>/<code>RUNNING</code>/<code>PAUSED</code>) 상태기계를 두 타이머로 굴리며, <strong>노드별 액션의 blocking 규칙을 판정</strong>해 Nav2 주행과 플러그인 액션을 조율하고, 매 변화를 <code>AGVState</code>로 발행하는 미션 실행 엔진.</p>
+</blockquote>
+<hr />
+<h2 id="_2">패키지 개요</h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>역할</td>
+<td>VDA5050 주문 실행 오케스트레이션 (주행 + 액션)</td>
+</tr>
+<tr>
+<td>노드 타입</td>
+<td><code>rclcpp::Node</code>, <code>RCLCPP_COMPONENTS_REGISTER_NODE</code>로 컴포넌트 등록</td>
+</tr>
+<tr>
+<td>실행 진입점</td>
+<td><code>vda5050_client_main.cpp</code> (SingleThreadedExecutor)</td>
+</tr>
+<tr>
+<td>확장 방식</td>
+<td><code>config.yaml</code>의 <code>action_handlers</code> + pluginlib 플러그인</td>
+</tr>
+<tr>
+<td>주행 백엔드</td>
+<td>Nav2 <code>navigate_through_poses</code> 액션</td>
+</tr>
+<tr>
+<td>상태 보고</td>
+<td><code>agv_state</code>(1Hz), <code>factsheet</code>, <code>order_id</code>(1Hz) 토픽</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">전체 파일 구조</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>isaac_ros_vda5050_client/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── src/
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├── vda5050_client_main.cpp        # 독립 실행 진입점 (main)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── vda5050_client_node.cpp        # ★ 모든 로직 (상태기계/주행/액션/취소/일시정지)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   └── example_action_handler.cpp     # 베이스 구현 예제 플러그인
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├── include/isaac_ros_vda5050_client/
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── vda5050_client_node.hpp        # Vda5050ClientNode 선언 + 템플릿 콜백
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   └── example_action_handler.hpp
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>├── config/
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   └── config.yaml                    # 기본(예제) 핸들러 설정
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>├── plugin.xml                         # example 핸들러 pluginlib 등록
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>└── test/
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    ├── test_nav2_client.py            # 통합 테스트
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    ├── test_nodes/nav2_simple_server.py   # Nav2 액션 시뮬 서버
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    └── test_orders/*.json             # 주문 시나리오 (blocking/parallel/failure 등)
+</code></pre></div>
+<hr />
+<h2 id="_4">각 파일 역할</h2>
+<h3 id="vda5050_client_maincpp"><code>vda5050_client_main.cpp</code> — 진입점</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">executors</span><span class="o">::</span><span class="n">SingleThreadedExecutor</span><span class="w"> </span><span class="n">exec</span><span class="p">;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">client_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Vda5050ClientNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="p">());</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="n">exec</span><span class="p">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">client_node</span><span class="p">);</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="n">exec</span><span class="p">.</span><span class="n">spin</span><span class="p">();</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">shutdown</span><span class="p">();</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>단일 스레드 executor로 노드를 spin. 컴포넌트 등록도 되어 있어 컨테이너 방식 로딩도 가능.</p>
+<h3 id="vda5050_client_nodehpp"><code>vda5050_client_node.hpp</code> — 선언부</h3>
+<ul>
+<li>멤버/콜백 선언과 함께 <strong>헤더에 정의된 템플릿 콜백 2종</strong>이 핵심:<ul>
+<li><code>ActionResponseCallback&lt;ActionType&gt;(goal, action)</code> — goal 수락/거부 → <code>RUNNING</code>/<code>FAILED</code></li>
+<li><code>ActionResultCallback&lt;ResultType&gt;(action, result, success, description)</code> — 결과 코드(SUCCEEDED/ABORTED/CANCELED)를 VDA5050 액션 상태(<code>FINISHED</code>/<code>FAILED</code>)로 매핑</li>
+</ul>
+</li>
+<li>플러그인이 include해서 쓰는 <strong>공개 API</strong>: <code>UpdateActionState</code>, <code>UpdateActionStateById</code>, <code>CreateError</code>, <code>AddError</code></li>
+</ul>
+<h3 id="vda5050_client_nodecpp"><code>vda5050_client_node.cpp</code> — 본체</h3>
+<p><strong>클래스</strong>: <code>Vda5050ClientNode</code> · <strong>상속</strong>: <code>rclcpp::Node</code></p>
+<h4 id="_5">생성자가 하는 일</h4>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>파라미터 선언</td>
+<td><code>update_feedback_period</code>, <code>odom_topic</code>, <code>battery_state_topic</code>, <code>robot_type</code>, <code>status_check_service</code>, <code>config_file</code>, <code>base_frame</code></td>
+</tr>
+<tr>
+<td>구독 생성</td>
+<td><code>client_commands</code>(Order), <code>instant_actions_commands</code>(InstantActions), <code>battery_state</code>, <code>odom</code>, <code>order_valid_error</code>, <code>info</code></td>
+</tr>
+<tr>
+<td>발행 생성</td>
+<td><code>agv_state</code>(AGVState), <code>factsheet</code>(Factsheet), <code>order_id</code>(String)</td>
+</tr>
+<tr>
+<td>액션 클라이언트</td>
+<td><code>navigate_through_poses</code> (Nav2)</td>
+</tr>
+<tr>
+<td>Factsheet 초기화</td>
+<td><code>robot_type</code>에 따라 <code>speed_max</code> 설정 (MANIPULATOR/CONVEYOR는 0 = 비주행형)</td>
+</tr>
+<tr>
+<td><strong>플러그인 로딩</strong></td>
+<td><code>config_file</code>의 <code>action_handlers</code> 순회 → <code>pluginlib</code>으로 인스턴스화 → <code>action_handler_map_[action_type] = plugin</code></td>
+</tr>
+<tr>
+<td>타이머 3개</td>
+<td>State(1Hz), ExecuteOrder(5Hz), OrderId(1Hz)</td>
+</tr>
+<tr>
+<td>TF</td>
+<td><code>map → base_frame</code> 조회용 buffer/listener</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_6">주요 콜백 / 메서드</h4>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OrderCallback(Order)</code></td>
+<td><code>CanAcceptOrder()</code> 통과 시 <code>current_order_</code> 저장, <code>InitAGVState()</code> 호출</td>
+</tr>
+<tr>
+<td><code>InitAGVState()</code></td>
+<td>새 주문에 맞춰 <code>node_states</code>/<code>action_states</code> 구성, 직전 주문 잔여 상태 정리, <code>client_state_ = RUNNING</code></td>
+</tr>
+<tr>
+<td><code>InstantActionsCallback(InstantActions)</code></td>
+<td>즉시명령 분기: <code>cancelOrder</code>/<code>startTeleop</code>/<code>stopTeleop</code>/<code>factsheetRequest</code>/<code>startPause</code>/<code>stopPause</code> 또는 일반 핸들러</td>
+</tr>
+<tr>
+<td><code>ExecuteOrderCallback()</code></td>
+<td><strong>메인 루프(5Hz).</strong> 취소/일시정지 처리 → 위치 갱신 → 액션 블로킹 판정 → 주행/완료 전환</td>
+</tr>
+<tr>
+<td><code>NavigateThroughPoses()</code></td>
+<td>다음 정지점까지 pose들을 묶어 Nav2 goal 전송</td>
+</tr>
+<tr>
+<td><code>ExecuteAction(action)</code></td>
+<td><code>action_handler_map_</code>에서 핸들러 찾아 <code>Execute()</code>. <code>pause_order</code> 특수 처리</td>
+</tr>
+<tr>
+<td><code>CancelOrder()</code> / <code>PauseOrder()</code> / <code>ResumeOrder()</code></td>
+<td>멱등적 핸드셰이크로 액션/주행 중단·재개</td>
+</tr>
+<tr>
+<td><code>UpdateActionState(ById)</code></td>
+<td><code>action_states</code> 갱신 + <code>PublishRobotState()</code> (플러그인이 호출)</td>
+</tr>
+<tr>
+<td><code>BatteryStateCallback</code> / <code>OdometryCallback</code> / <code>InfoCallback</code></td>
+<td>센서/정보를 AGVState 필드에 매핑</td>
+</tr>
+<tr>
+<td><code>PublishRobotState()</code> / <code>PublishRobotFactsheet()</code></td>
+<td>타임스탬프 찍어 발행</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_7">주요 멤버 변수</h4>
+<table>
+<thead>
+<tr>
+<th>변수</th>
+<th>타입</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>client_state_</code></td>
+<td><code>enum {IDLE, RUNNING, PAUSED}</code></td>
+<td>전체 미션 상태</td>
+</tr>
+<tr>
+<td><code>current_order_</code></td>
+<td><code>Order::ConstSharedPtr</code></td>
+<td>실행 중인 주문</td>
+</tr>
+<tr>
+<td><code>agv_state_</code></td>
+<td><code>AGVState::SharedPtr</code></td>
+<td>클라우드로 보고할 누적 상태</td>
+</tr>
+<tr>
+<td><code>action_handler_map_</code></td>
+<td><code>unordered_map&lt;string, handler&gt;</code></td>
+<td>action_type → 플러그인</td>
+</tr>
+<tr>
+<td><code>action_handler_loader_</code></td>
+<td><code>pluginlib::ClassLoader</code></td>
+<td>핸들러 동적 로더</td>
+</tr>
+<tr>
+<td><code>current_node_</code> / <code>next_stop_</code></td>
+<td><code>size_t</code></td>
+<td>현재 노드 / 이번 주행의 목표 노드 인덱스</td>
+</tr>
+<tr>
+<td><code>reached_waypoint_</code></td>
+<td><code>bool</code></td>
+<td>현재 노드 도달 여부 (액션 실행 조건)</td>
+</tr>
+<tr>
+<td><code>pause_order_</code></td>
+<td><code>bool</code></td>
+<td>텔레옵/일시정지로 주행 멈춤</td>
+</tr>
+<tr>
+<td><code>cancel_action_</code> / <code>pause_action_</code></td>
+<td><code>Action::SharedPtr</code></td>
+<td>펜딩 즉시명령</td>
+</tr>
+<tr>
+<td><code>state_mutex_</code></td>
+<td><code>std::mutex</code></td>
+<td><code>agv_state_</code> 보호</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_8">핵심 알고리즘</h2>
+<h3 id="1">1. 상태기계 — 두 타이머의 협력</h3>
+<p>3개 상태(<code>IDLE</code>/<code>RUNNING</code>/<code>PAUSED</code>)를 두 타이머가 나눠 담당한다.</p>
+<table>
+<thead>
+<tr>
+<th>타이머</th>
+<th>주기</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>State 타이머</strong></td>
+<td>1Hz (<code>update_feedback_period</code>)</td>
+<td>무조건 현재 <code>AGVState</code> 발행 → 클라우드는 항상 최신 상태 수신</td>
+</tr>
+<tr>
+<td><strong>Execute 타이머</strong></td>
+<td>5Hz (0.2s, <code>kExecuteOrderPeriod</code>)</td>
+<td>실제 진행 엔진. 매 틱마다 아래 알고리즘 수행</td>
+</tr>
+<tr>
+<td>OrderId 타이머</td>
+<td>1Hz</td>
+<td><code>order_id</code> 발행 → json_info_generator가 버퍼 리셋 판단에 사용</td>
+</tr>
+</tbody>
+</table>
+<p><code>ExecuteOrderCallback()</code> 매 틱 처리:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>1. cancel_action_ 있으면 → CancelOrder()
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>2. pause_action_  있으면 → PauseOrder()
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>3. 주행형 로봇이면 TF map→base_link 로 agv_position 갱신
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>   (TF 실패 시 이번 틱 skip, 120초 throttle 경고)
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>4. client_state_ == RUNNING 이고:
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>   - errors[0] 이 FATAL 이면 → 러닝 액션 없을 때 IDLE 전환 후 종료
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>   - reached_waypoint_ == true 이면 → [2] 액션 블로킹 판정 실행
+</code></pre></div>
+<h3 id="2-vda5050">2. 액션 블로킹 처리 (VDA5050 핵심 규칙)</h3>
+<p>현재 노드의 액션들을 순회하며 <code>blocking_type</code>으로 <strong>주행 가부</strong>와 <strong>실행 가부</strong>를 결정한다.</p>
+<table>
+<thead>
+<tr>
+<th>blocking_type</th>
+<th>의미</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HARD</strong> (빈 값은 HARD 취급)</td>
+<td>그 시점 유일 허용</td>
+<td>다른 러닝 액션 없을 때만 실행, 끝날 때까지 <strong>주행·다른 액션 모두 대기</strong>(<code>return</code>)</td>
+</tr>
+<tr>
+<td><strong>SOFT</strong></td>
+<td>다른 액션 OK, 주행 불가</td>
+<td>실행하되 <code>stop_driving = true</code> 로 주행만 정지</td>
+</tr>
+<tr>
+<td><strong>NONE</strong></td>
+<td>주행·다른 액션 모두 허용</td>
+<td>즉시 병렬 실행, 주행 계속</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>for action in current_order_.nodes[current_node_].actions:
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    status = GetActionState(action.action_id)
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    if status in {FINISHED, FAILED}: continue
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    elif status in {RUNNING, INITIALIZING}:
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        has_running_action = true
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        if HARD:  return            # 끝날 때까지 전부 대기
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        if SOFT:  stop_driving = true
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    elif status == WAITING:
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        if HARD:
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>            if not has_running_action: ExecuteAction(action)
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>            return                   # 하드 끝날 때까지 대기
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        else:                        # SOFT/NONE
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>            if SOFT: stop_driving = true
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>            ExecuteAction(action)    # 즉시 실행
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>            has_running_action = true
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>if stop_driving: return              # SOFT/HARD 진행 중 → 주행 정지
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>next_stop_++                         # 이 노드의 SOFT/HARD 액션 모두 완료
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>if next_stop_ &gt;= nodes.size():       # 마지막 노드 → 주문 완료
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>    PublishRobotState(); client_state_ = IDLE
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>else:
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    reached_waypoint_ = false; NavigateThroughPoses()   # 다음 구간 주행
+</code></pre></div>
+<h3 id="3-navigatethroughposes">3. NavigateThroughPoses — 구간 묶기</h3>
+<p>현재 노드 다음부터 pose를 누적하다가, 아래 중 하나를 만나면 그 지점을 <code>next_stop_</code>으로 끊어 <strong>하나의 Nav2 goal</strong>로 보낸다:</p>
+<ul>
+<li><strong>(a)</strong> 액션이 있는 노드 (그 노드에서 멈춰 액션 실행해야 함)</li>
+<li><strong>(b)</strong> 마지막 노드</li>
+<li><strong>(c)</strong> <code>allowed_deviation_x_y == 0</code> (정밀 정지 요구)</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_node_</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nodes</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="n">poses</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="n">위치를</span><span class="w"> </span><span class="n">PoseStamped로</span><span class="w"> </span><span class="n">변환</span><span class="p">);</span><span class="w">  </span><span class="c1">// theta → quaternion</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">actions</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">nodes</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="mi">-1</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="o">||</span><span class="w"> </span><span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">node_position</span><span class="p">.</span><span class="n">allowed_deviation_x_y</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="n">next_stop_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>시작 시(<code>current_node_ == 0</code>) <code>status_check_service</code>로 Nav2가 <code>ACTIVE</code>인지 확인 후 진행</li>
+<li>콜백:<ul>
+<li><code>NavGoalResponseCallback</code> — 거부 시 FATAL 에러 + IDLE</li>
+<li><code>NavFeedbackCallback</code> — <code>number_of_poses_remaining</code>으로 <code>current_node_</code> 역산, 통과 노드의 <code>node_states</code> 제거</li>
+<li><code>NavResultCallback</code> — SUCCEEDED 시 <code>reached_waypoint_ = true</code>, ABORTED/CANCELED는 에러 처리</li>
+</ul>
+</li>
+</ul>
+<h3 id="4">4. 액션 핸들러 디스패치 (확장 메커니즘)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>config.yaml(action_handlers) ─생성자─▶ pluginlib.createSharedInstance(plugin)
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>   → plugin.Initialize(this, config[name])
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>   → 각 action_type 문자열 → action_handler_map_[type] = plugin
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>런타임: ExecuteAction(action)
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>   → action_handler_map_[action.action_type].Execute(action)
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>   → 없으면 UpdateActionState(FAILED, &quot;Action handler not found&quot;)
+</code></pre></div>
+<p>새 작업 추가 = <strong>새 플러그인 + config 한 줄</strong>. 클라이언트 본체는 무수정. 자세한 플러그인 규약은 <a href="../action-handlers/">Action Handlers</a> 참고.</p>
+<h3 id="5">5. 취소 / 일시정지 핸드셰이크</h3>
+<p><code>CancelOrder()</code>·<code>PauseOrder()</code>는 <strong>여러 틱에 걸쳐 멱등적으로</strong> 동작한다:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>WAITING 액션      → 즉시 FAILED(취소) / 그대로(일시정지)
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>RUNNING/INIT 액션 → handler-&gt;Cancel()/Pause() 호출
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>                    (canceled_action_ids_ / paused_action_ids 로 중복 호출 방지)
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>진행 중 nav goal  → async_cancel_goal()
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>모든 액션 정리 &amp;&amp; nav_goal_handle_ == nullptr 이 되면:
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>   cancelOrder/startPause 액션을 FINISHED 로 마감
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>   client_state_ = IDLE / PAUSED 전환
+</code></pre></div>
+<p>특수 즉시명령은 클라이언트가 직접 처리한다:</p>
+<table>
+<thead>
+<tr>
+<th>action_type</th>
+<th>처리</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cancelOrder</code></td>
+<td><code>cancel_action_</code> 세팅 → 다음 틱 <code>CancelOrder()</code></td>
+</tr>
+<tr>
+<td><code>startTeleop</code> / <code>stopTeleop</code></td>
+<td><code>TeleopActionHandler</code> — 주행 취소 후 PAUSED / 재개 후 RUNNING</td>
+</tr>
+<tr>
+<td><code>startPause</code> / <code>stopPause</code></td>
+<td><code>PauseOrder()</code> / <code>ResumeOrder()</code></td>
+</tr>
+<tr>
+<td><code>factsheetRequest</code></td>
+<td><code>PublishRobotFactsheet()</code></td>
+</tr>
+<tr>
+<td><code>pause_order</code> (주문 내 액션)</td>
+<td><code>pause_order_</code> 플래그 세팅, <code>stopTeleop</code> 올 때까지 RUNNING 유지</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_9">클래스 내부 연계 도식도</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>                ┌─────────────── 생성자 ───────────────┐
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>                │ 파라미터·구독·발행 생성,                │
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>                │ config.yaml → pluginlib →            │
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>                │ action_handler_map_[type] = plugin    │
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>                └─────────────────────────────────────┘
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  [구독 콜백]                                  [3개 타이머]
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  OrderCallback ───────────┐                  ┌── StateTimerCallback (1Hz)
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    └ CanAcceptOrder()      │                  │     └ PublishRobotState() → agv_state
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    └ InitAGVState() ───────┤                  ├── ExecuteOrderCallback (5Hz, 메인 루프)
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>       (node/action_states, ▼                  └── OrderIdCallback (1Hz) → order_id
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>        client_state=RUNNING)   ┌──── ExecuteOrderCallback (상태기계) ────┐
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  InstantActionsCallback        │ cancel_action_? → CancelOrder()          │
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>    ├ cancelOrder               │ pause_action_?  → PauseOrder()           │
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>    ├ startTeleop/stopTeleop    │ TF map→base_link 위치 갱신                │
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    ├ startPause/stopPause      │ if RUNNING &amp; reached_waypoint_:          │
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    ├ factsheetRequest          │   액션 blocking 판정(HARD/SOFT/NONE)      │
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>    └ 기타 → 핸들러.Execute()     │   ExecuteAction() / 모두 완료 → next_stop_│
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>  BatteryStateCallback          │   마지막 노드? IDLE : NavigateThroughPoses│
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>  OdometryCallback              └─────────────────────────────────────────┘
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>  InfoCallback                          │ 주행                  ▲ 결과
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>  OrderValidErrorCallback               ▼                      │
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>                             NavigateThroughPoses() ─ Nav2 action ─▶
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>                              (status_check 로 active 확인,        NavGoalResponseCallback
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>                               정지점까지 poses 묶어 전송)          NavFeedbackCallback
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>                                                                  NavResultCallback → reached_waypoint_
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>  [플러그인이 부르는 공개 API]
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>  UpdateActionState/ById ─→ agv_state_.action_states 갱신 + PublishRobotState()
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>  ActionResponseCallback&lt;T&gt; / ActionResultCallback&lt;T&gt; (헤더 템플릿) ─→ 성공/실패를 액션상태로 매핑
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>  CreateError / AddError ─→ agv_state_.errors 에 에러 추가
+</code></pre></div>
+<hr />
+<h2 id="_10">주요 파라미터</h2>
+<table>
+<thead>
+<tr>
+<th>파라미터</th>
+<th>기본값</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>update_feedback_period</code></td>
+<td><code>1.0</code></td>
+<td>AGVState 발행 주기 (초)</td>
+</tr>
+<tr>
+<td><code>odom_topic</code></td>
+<td><code>odom</code></td>
+<td>속도 추출용 odometry 토픽</td>
+</tr>
+<tr>
+<td><code>battery_state_topic</code></td>
+<td><code>battery_state</code></td>
+<td>배터리 상태 토픽</td>
+</tr>
+<tr>
+<td><code>robot_type</code></td>
+<td><code>CARRIER</code></td>
+<td><code>MANIPULATOR/CARRIER/FORKLIFT/CONVEYOR/TUGGER/HUMANOID</code> (비주행형은 위치 갱신 skip)</td>
+</tr>
+<tr>
+<td><code>status_check_service</code></td>
+<td><code>""</code></td>
+<td>Nav2 ready 확인용 lifecycle <code>GetState</code> 서비스 (예: <code>velocity_smoother/get_state</code>)</td>
+</tr>
+<tr>
+<td><code>config_file</code></td>
+<td><code>config/client_config.yaml</code></td>
+<td>액션 핸들러 설정 파일 경로</td>
+</tr>
+<tr>
+<td><code>base_frame</code></td>
+<td><code>base_link</code></td>
+<td>TF 조회 기준 프레임</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="ros-2">ROS 2 인터페이스</h2>
+<h3 id="subscribers">구독 (Subscribers)</h3>
+<table>
+<thead>
+<tr>
+<th>토픽</th>
+<th>타입</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>client_commands</code></td>
+<td><code>vda5050_msgs/Order</code></td>
+<td>주행+작업 주문</td>
+</tr>
+<tr>
+<td><code>instant_actions_commands</code></td>
+<td><code>vda5050_msgs/InstantActions</code></td>
+<td>즉시명령</td>
+</tr>
+<tr>
+<td><code>battery_state</code></td>
+<td><code>sensor_msgs/BatteryState</code></td>
+<td>배터리</td>
+</tr>
+<tr>
+<td><code>odom</code></td>
+<td><code>nav_msgs/Odometry</code></td>
+<td>속도</td>
+</tr>
+<tr>
+<td><code>order_valid_error</code></td>
+<td><code>std_msgs/String</code></td>
+<td>브릿지가 전달한 주문 파싱 에러</td>
+</tr>
+<tr>
+<td><code>info</code></td>
+<td><code>std_msgs/String</code></td>
+<td>json_info_generator 집계 정보</td>
+</tr>
+</tbody>
+</table>
+<h3 id="publishers">발행 (Publishers)</h3>
+<table>
+<thead>
+<tr>
+<th>토픽</th>
+<th>타입</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>agv_state</code></td>
+<td><code>vda5050_msgs/AGVState</code></td>
+<td>로봇 상태 보고 (1Hz)</td>
+</tr>
+<tr>
+<td><code>factsheet</code></td>
+<td><code>vda5050_msgs/Factsheet</code></td>
+<td>로봇 사양</td>
+</tr>
+<tr>
+<td><code>order_id</code></td>
+<td><code>std_msgs/String</code></td>
+<td>현재 주문 ID (1Hz)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_11">액션 클라이언트 / 서비스 클라이언트</h3>
+<table>
+<thead>
+<tr>
+<th>이름</th>
+<th>타입</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>navigate_through_poses</code></td>
+<td><code>nav2_msgs/action/NavigateThroughPoses</code></td>
+<td>다중 웨이포인트 주행</td>
+</tr>
+<tr>
+<td><code>status_check_service</code></td>
+<td><code>lifecycle_msgs/srv/GetState</code></td>
+<td>Nav2 active 확인</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_12">커스텀 활용 방향</h2>
+<h3 id="1_1">방향 1: 새 작업 타입 추가</h3>
+<p><code>Vda5050ActionHandlerBase</code>를 상속한 플러그인을 만들고 <code>config.yaml</code>에 등록만 하면 된다. 클라이언트 본체 수정 불필요. → <a href="../action-handlers/#custom-handler">Action Handlers</a></p>
+<h3 id="2">방향 2: 비주행형 로봇(매니퓰레이터/컨베이어)</h3>
+<p><code>robot_type</code>을 <code>MANIPULATOR</code>/<code>CONVEYOR</code>로 두면 <code>speed_max = 0</code>이 되어 TF 기반 위치 갱신을 건너뛴다. 주행 없이 노드의 액션만 실행하는 작업 셀에 적합.</p>
+<h3 id="3-nav2">방향 3: Nav2 준비 게이팅</h3>
+<p><code>status_check_service</code>를 Nav2 lifecycle 노드(예: <code>velocity_smoother/get_state</code>)로 지정하면, 첫 주행 전에 Nav2가 <code>ACTIVE</code>인지 확인하고 아니면 다음 틱에 재시도한다.</p>
+<hr />
+<h2 id="references">참고 자료 (References)</h2>
+<ol>
+<li><strong>VDA5050 프로토콜 명세</strong> — Order/InstantActions/State 메시지와 blocking 규칙의 원전.
+   <a href="https://github.com/VDA5050/VDA5050/blob/main/VDA5050_EN.md">https://github.com/VDA5050/VDA5050/blob/main/VDA5050_EN.md</a></li>
+<li><strong>Nav2 NavigateThroughPoses</strong> — 다중 웨이포인트 주행 액션.
+   <a href="https://docs.nav2.org">https://docs.nav2.org</a></li>
+<li><strong>pluginlib</strong> — 런타임 C++ 플러그인 로딩.
+   <a href="https://github.com/ros/pluginlib">https://github.com/ros/pluginlib</a></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">출처</p>
+<p>본문은 <code>isaac_ros_vda5050_client</code> 패키지 (Isaac ROS 4.4.0 기준) 소스코드(<code>vda5050_client_node.cpp/.hpp</code>) 분석에 기반한다.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../action-handlers/" class="md-footer__link md-footer__link--next" aria-label="Next: Action Handlers">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Action Handlers
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+      
+        <script src="../../../javascripts/tables.js"></script>
+      
+    
+  </body>
+</html>

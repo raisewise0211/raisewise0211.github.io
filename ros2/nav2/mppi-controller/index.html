@@ -1,0 +1,4602 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://raisewise0211.github.io/ros2/nav2/mppi-controller/">
+      
+      
+        <link rel="prev" href="../../dds/session-10-integration/">
+      
+      
+        <link rel="next" href="../lifecycle-manager/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>MPPI Controller - Robotics Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans+KR:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans KR";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/fonts.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/home.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/editorial.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mppi-controller" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Robotics Notes" class="md-header__button md-logo" aria-label="Robotics Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robotics Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MPPI Controller
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../math/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../papers/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Papers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  ROS2
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Robotics Notes" class="md-nav__button md-logo" aria-label="Robotics Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robotics Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../math/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linear Algebra
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/linear-algebra/vector-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    벡터와 행렬
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../math/kinematics/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kinematics
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kinematics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/kinematics/mobile-robot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모바일 로봇 기구학
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../papers/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Papers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../papers/mapf/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MAPF
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MAPF
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../papers/mapf/lacam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LaCAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../papers/mapf/pibt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PIBT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../papers/vla/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VLA
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    VLA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../papers/vla/openvla/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenVLA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS2
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ROS2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../dds/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DDS
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DDS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-01-why-dds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 1 · 왜 DDS인가?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-02-dcps-discovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 2 · DCPS & Discovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-03-rtps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 3 · RTPS 프로토콜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-04-qos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 4 · QoS 정책 마스터
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-05-rmw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 5 · rmw 레이어
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-06-domain-namespace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 6 · Domain ID & Namespace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-07-xml-profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 7 · DDS XML Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-08-multimachine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 8 · 멀티머신 네트워킹
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-09-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 9 · SROS2 보안
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dds/session-10-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션 10 · 전체 통합 & 실전 시나리오
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nav2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nav2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MPPI Controller
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MPPI Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        한 줄 요약
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        패키지 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        전체 파일 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        핵심 알고리즘: MPPI 이론
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="핵심 알고리즘: MPPI 이론">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mppi_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MPPI란?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        수학적 원리
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        각 파일 역할 및 함수/클래스 설명
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="각 파일 역할 및 함수/클래스 설명">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controllercpp-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        controller.cpp — 메인 ROS2 플러그인
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimizercpp-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        optimizer.cpp — MPPI 최적화 엔진
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critic_managercpp-critic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        critic_manager.cpp — Critic 플러그인 관리자
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#noise_generatorcpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        noise_generator.cpp — 노이즈 샘플링
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#motion_modelscpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        motion_models.cpp — 운동 모델
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters_handlercpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parameters_handler.cpp — 동적 파라미터 관리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trajectory_visualizercpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        trajectory_visualizer.cpp — 시각화
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimal_trajectory_validatorcpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        optimal_trajectory_validator.cpp — 궤적 유효성 검사
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critic 구현체들
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Critic 구현체들">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        공통 파라미터
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraintcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ConstraintCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#costcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CostCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goalcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GoalCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goalanglecritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GoalAngleCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#obstaclescritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ObstaclesCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pathaligncritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PathAlignCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pathanglecritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PathAngleCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pathfollowcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PathFollowCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preferforwardcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PreferForwardCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#twirlingcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TwirlingCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#velocitydeadbandcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VelocityDeadbandCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        데이터 모델 헤더
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="데이터 모델 헤더">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelsstatehpp-mppimodelsstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        models/state.hpp — mppi::models::State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelscontrol_sequencehpp-mppimodelscontrolsequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        models/control_sequence.hpp — mppi::models::ControlSequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelstrajectorieshpp-mppimodelstrajectories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        models/trajectories.hpp — mppi::models::Trajectories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelspathhpp-mppimodelspath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        models/path.hpp — mppi::models::Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelsconstraintshpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        models/constraints.hpp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critic_datahpp-mppicriticdata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        critic_data.hpp — mppi::CriticData
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilshpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        utils.hpp — 유틸리티 함수
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        파일 간 연계 관계 도식도
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        제어 루프 상세 흐름
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        주요 파라미터 정리
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="주요 파라미터 정리">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optimizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimizer 파라미터
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        커스텀 컨트롤러 패키지 개발 방향 추천
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="커스텀 컨트롤러 패키지 개발 방향 추천">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-critic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 1: 커스텀 Critic 개발 (가장 추천)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-motionmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 2: 커스텀 MotionModel 개발
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-trajectoryvalidator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 3: 커스텀 TrajectoryValidator 개발
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 4: 완전 커스텀 MPPI 기반 컨트롤러
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="방향 4: 완전 커스텀 MPPI 기반 컨트롤러">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-1-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-1. 멀티-에이전트 인식 MPPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-2-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-2. 학습 기반 비용함수 MPPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-3-mppi-hierarchical-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-3. 계층적 MPPI (Hierarchical MPPI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-4-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-4. 에너지 최적화 MPPI (모바일 플랫폼)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        커스텀 개발 시 핵심 고려사항
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="커스텀 개발 시 핵심 고려사항">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eigen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eigen 배열 활용 패턴
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criticdata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CriticData 캐시 활용
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        스레드 안전성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lifecycle-manager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lifecycle Manager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../cloud-control/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Isaac ROS Cloud Control
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Isaac ROS Cloud Control
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-control/mission-client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mission Client
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-control/action-handlers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Action Handlers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-control/mqtt-bridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MQTT Bridge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-control/supporting-packages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    보조 패키지
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        한 줄 요약
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        패키지 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        전체 파일 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        핵심 알고리즘: MPPI 이론
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="핵심 알고리즘: MPPI 이론">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mppi_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MPPI란?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        수학적 원리
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        각 파일 역할 및 함수/클래스 설명
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="각 파일 역할 및 함수/클래스 설명">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controllercpp-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        controller.cpp — 메인 ROS2 플러그인
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimizercpp-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        optimizer.cpp — MPPI 최적화 엔진
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critic_managercpp-critic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        critic_manager.cpp — Critic 플러그인 관리자
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#noise_generatorcpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        noise_generator.cpp — 노이즈 샘플링
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#motion_modelscpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        motion_models.cpp — 운동 모델
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters_handlercpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parameters_handler.cpp — 동적 파라미터 관리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trajectory_visualizercpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        trajectory_visualizer.cpp — 시각화
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimal_trajectory_validatorcpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        optimal_trajectory_validator.cpp — 궤적 유효성 검사
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critic 구현체들
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Critic 구현체들">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        공통 파라미터
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraintcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ConstraintCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#costcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CostCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goalcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GoalCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goalanglecritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GoalAngleCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#obstaclescritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ObstaclesCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pathaligncritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PathAlignCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pathanglecritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PathAngleCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pathfollowcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PathFollowCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preferforwardcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PreferForwardCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#twirlingcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TwirlingCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#velocitydeadbandcritic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VelocityDeadbandCritic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        데이터 모델 헤더
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="데이터 모델 헤더">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelsstatehpp-mppimodelsstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        models/state.hpp — mppi::models::State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelscontrol_sequencehpp-mppimodelscontrolsequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        models/control_sequence.hpp — mppi::models::ControlSequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelstrajectorieshpp-mppimodelstrajectories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        models/trajectories.hpp — mppi::models::Trajectories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelspathhpp-mppimodelspath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        models/path.hpp — mppi::models::Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelsconstraintshpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        models/constraints.hpp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critic_datahpp-mppicriticdata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        critic_data.hpp — mppi::CriticData
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilshpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        utils.hpp — 유틸리티 함수
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        파일 간 연계 관계 도식도
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        제어 루프 상세 흐름
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        주요 파라미터 정리
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="주요 파라미터 정리">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optimizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimizer 파라미터
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        커스텀 컨트롤러 패키지 개발 방향 추천
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="커스텀 컨트롤러 패키지 개발 방향 추천">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-critic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 1: 커스텀 Critic 개발 (가장 추천)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-motionmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 2: 커스텀 MotionModel 개발
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-trajectoryvalidator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 3: 커스텀 TrajectoryValidator 개발
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향 4: 완전 커스텀 MPPI 기반 컨트롤러
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="방향 4: 완전 커스텀 MPPI 기반 컨트롤러">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-1-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-1. 멀티-에이전트 인식 MPPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-2-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-2. 학습 기반 비용함수 MPPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-3-mppi-hierarchical-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-3. 계층적 MPPI (Hierarchical MPPI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-4-mppi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-4. 에너지 최적화 MPPI (모바일 플랫폼)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        커스텀 개발 시 핵심 고려사항
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="커스텀 개발 시 핵심 고려사항">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eigen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eigen 배열 활용 패턴
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criticdata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CriticData 캐시 활용
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        스레드 안전성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="mppi-controller">MPPI Controller</h1>
+<div class="admonition info">
+<p class="admonition-title">패키지 정보</p>
+<ul>
+<li><strong>패키지</strong>: <code>nav2_mppi_controller</code></li>
+<li><strong>알고리즘</strong>: Model Predictive Path Integral (MPPI)</li>
+<li><strong>역할</strong>: Nav2의 플러그인 기반 지역 경로 추종(local path following) 컨트롤러</li>
+<li><strong>기준 버전</strong>: Nav2 Jazzy / Rolling</li>
+<li><strong>핵심 의존성</strong>: Eigen3, pluginlib, nav2_costmap_2d</li>
+</ul>
+</div>
+<hr />
+<h2 id="_1">한 줄 요약</h2>
+<blockquote>
+<p>확률적 샘플링과 정보이론 기반 가중치 업데이트를 통해 최적 제어 시퀀스를 실시간으로 계산하는 Nav2 지역 컨트롤러. 볼록 최적화 없이 비선형·비볼록 비용함수를 직접 다룬다.</p>
+</blockquote>
+<hr />
+<h2 id="_2">패키지 개요</h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>알고리즘</td>
+<td>Model Predictive Path Integral (MPPI)</td>
+</tr>
+<tr>
+<td>제어 주기</td>
+<td>실시간 (기본 controller_frequency에 맞춰)</td>
+</tr>
+<tr>
+<td>핵심 의존성</td>
+<td>Eigen3 (행렬 연산), pluginlib (플러그인), nav2_costmap_2d</td>
+</tr>
+<tr>
+<td>확장 포인트</td>
+<td>MotionModel, CriticFunction, OptimalTrajectoryValidator (모두 pluginlib)</td>
+</tr>
+<tr>
+<td>연산 방식</td>
+<td>배치 행렬 연산 (Eigen ArrayXXf), 선택적 멀티스레딩 (NoiseGenerator)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">전체 파일 구조</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nav2_mppi_controller/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── src/
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├── controller.cpp                        # ROS2 플러그인 진입점
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── optimizer.cpp                         # MPPI 알고리즘 핵심
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── critic_manager.cpp                    # Critic 플러그인 로더/실행기
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   ├── noise_generator.cpp                   # 가우시안 노이즈 샘플링
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── motion_models.cpp                     # 로봇 운동 모델 (diff/omni/ackermann)
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   ├── parameters_handler.cpp                # 동적 파라미터 관리
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   ├── trajectory_visualizer.cpp             # RViz 시각화
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   ├── trajectory_validators/
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│   │   └── optimal_trajectory_validator.cpp  # 궤적 유효성 검사
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│   └── critics/
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│       ├── constraint_critic.cpp             # 속도 제약 위반 페널티
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│       ├── cost_critic.cpp                   # 코스트맵 비용 회피
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│       ├── goal_critic.cpp                   # 목표점 유도
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│       ├── goal_angle_critic.cpp             # 목표 방향 정렬
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│       ├── obstacles_critic.cpp              # 장애물 회피
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│       ├── path_align_critic.cpp             # 경로 정렬
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│       ├── path_angle_critic.cpp             # 경로 방향 정렬
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│       ├── path_follow_critic.cpp            # 경로 추종
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│       ├── prefer_forward_critic.cpp         # 전진 우선
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│       ├── twirling_critic.cpp               # 회전 진동 억제
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│       └── velocity_deadband_critic.cpp      # 속도 데드밴드 강제
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>├── include/nav2_mppi_controller/
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│   ├── controller.hpp
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│   ├── optimizer.hpp
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│   ├── critic_manager.hpp
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>│   ├── critic_function.hpp                   # Critic 추상 기반 클래스
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>│   ├── critic_data.hpp                       # Critic 공유 데이터 구조
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>│   ├── motion_models.hpp
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>│   ├── optimal_trajectory_validator.hpp
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│   ├── models/
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>│   │   ├── state.hpp                         # 배치 속도 상태
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>│   │   ├── control_sequence.hpp              # 제어 시퀀스
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>│   │   ├── trajectories.hpp                  # 생성된 궤적들
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>│   │   ├── path.hpp                          # 참조 경로
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>│   │   ├── constraints.hpp                   # 제어 제약 조건
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>│   │   └── optimizer_settings.hpp           # MPPI 전체 설정
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>│   └── tools/
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>│       ├── noise_generator.hpp
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>│       ├── parameters_handler.hpp
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>│       ├── trajectory_visualizer.hpp
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>│       └── utils.hpp                         # 기하/수학/변환 유틸리티
+</code></pre></div>
+<hr />
+<h2 id="mppi">핵심 알고리즘: MPPI 이론</h2>
+<h3 id="mppi_1">MPPI란?</h3>
+<p>MPPI(Model Predictive Path Integral)는 정보이론 기반의 확률적 최적 제어 알고리즘이다.
+기존 MPC와 달리 볼록 최적화(convex optimization) 없이도 <strong>비선형·비볼록 비용함수</strong>를 처리할 수 있다.</p>
+<h3 id="_4">수학적 원리</h3>
+<p><strong>1단계: 노이즈 샘플링</strong></p>
+<p>현재 최적 제어 시퀀스 <span class="arithmatex">\(U^* = \{u_0, u_1, ..., u_{T-1}\}\)</span> 에 가우시안 노이즈를 추가해 <span class="arithmatex">\(K\)</span>개의 후보 시퀀스 생성:</p>
+<div class="arithmatex">\[
+\tilde{U}^{(k)} = U^* + \epsilon^{(k)}, \quad \epsilon^{(k)} \sim \mathcal{N}(0, \Sigma)
+\]</div>
+<ul>
+<li><span class="arithmatex">\(K\)</span>: <code>batch_size</code> (기본 1000)</li>
+<li><span class="arithmatex">\(T\)</span>: <code>time_steps</code> (기본 56)</li>
+<li><span class="arithmatex">\(\Sigma\)</span>: 샘플링 표준편차 대각행렬 (<code>vx_std</code>, <code>vy_std</code>, <code>wz_std</code>)</li>
+</ul>
+<p><strong>2단계: 궤적 롤아웃</strong></p>
+<p>각 제어 시퀀스를 운동 모델(Motion Model)로 적분하여 <span class="arithmatex">\(K\)</span>개의 후보 궤적 생성:</p>
+<div class="arithmatex">\[
+x_{t+1}^{(k)} = f(x_t^{(k)}, \tilde{u}_t^{(k)})
+\]</div>
+<p><strong>3단계: 비용 평가</strong></p>
+<p>각 궤적의 총 비용 <span class="arithmatex">\(S^{(k)}\)</span>를 Critic들이 평가:</p>
+<div class="arithmatex">\[
+S^{(k)} = \sum_{\text{critic } c} w_c \cdot \text{cost}_c(\tau^{(k)})
+\]</div>
+<p><strong>4단계: 소프트맥스 가중 업데이트 (정보이론적 핵심)</strong></p>
+<p>낮은 비용의 궤적에 높은 가중치를 부여하여 제어 시퀀스 업데이트:</p>
+<div class="arithmatex">\[
+\beta = \min_k S^{(k)}
+\]</div>
+<div class="arithmatex">\[
+w^{(k)} = \frac{1}{\eta} \exp\left(-\frac{1}{\lambda}(S^{(k)} - \beta)\right), \quad \eta = \sum_k w^{(k)}
+\]</div>
+<div class="arithmatex">\[
+U^* \leftarrow \sum_{k=1}^{K} w^{(k)} \cdot \tilde{U}^{(k)}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\lambda\)</span>: <code>temperature</code> (기본 0.3) — 낮을수록 최저비용 궤적에 집중</li>
+<li><span class="arithmatex">\(\gamma\)</span>: <code>gamma</code> (기본 0.015) — 제어 입력 크기에 대한 정규화 항</li>
+</ul>
+<p><strong>5단계: Savitzky-Golay 필터</strong></p>
+<p>업데이트된 제어 시퀀스를 9포인트 창의 S-G 필터로 스무딩하여 부드러운 명령 생성.</p>
+<p><strong>6단계: 반복 정제</strong></p>
+<p>위 1~5단계를 <code>iteration_count</code>번 반복하여 로컬 최적해로 수렴.</p>
+<hr />
+<h2 id="_5">각 파일 역할 및 함수/클래스 설명</h2>
+<h3 id="controllercpp-ros2"><code>controller.cpp</code> — 메인 ROS2 플러그인</h3>
+<p><strong>클래스</strong>: <code>mppi::MPPIController</code>
+<strong>상속</strong>: <code>nav2_core::Controller</code>
+<strong>역할</strong>: Nav2 플러그인 인터페이스 구현. 수명주기(lifecycle) 관리, 외부로부터 경로·속도를 수신하고 속도 명령을 출력.</p>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>configure(node, name, tf, costmap_ros)</code></td>
+<td>플러그인 초기화. <code>Optimizer</code>, <code>TrajectoryVisualizer</code>, <code>ParametersHandler</code> 생성 및 설정</td>
+</tr>
+<tr>
+<td><code>cleanup()</code></td>
+<td>리소스 해제, publisher/subscriber 제거</td>
+</tr>
+<tr>
+<td><code>activate()</code></td>
+<td>플러그인 활성화, publisher 활성화</td>
+</tr>
+<tr>
+<td><code>deactivate()</code></td>
+<td>플러그인 비활성화</td>
+</tr>
+<tr>
+<td><code>computeVelocityCommands(pose, velocity, checker)</code></td>
+<td><strong>핵심 메서드</strong>: <code>Optimizer::evalControl()</code> 호출 후 <code>TwistStamped</code> 반환</td>
+</tr>
+<tr>
+<td><code>setPath(path)</code></td>
+<td>신규 전역 경로 수신 시 호출, Optimizer에 전달</td>
+</tr>
+<tr>
+<td><code>setSpeedLimit(speed_limit, percentage)</code></td>
+<td>동적 속도 제한 설정 (퍼센트 또는 절대값)</td>
+</tr>
+<tr>
+<td><code>visualize(optimal_trajectory)</code></td>
+<td>RViz에 최적 궤적과 후보 궤적 퍼블리시</td>
+</tr>
+</tbody>
+</table>
+<p><strong>주요 내부 구조</strong>:</p>
+<ul>
+<li><code>Optimizer optimizer_</code> — 최적화 엔진</li>
+<li><code>TrajectoryVisualizer trajectory_visualizer_</code> — 시각화</li>
+<li><code>ParametersHandler parameters_handler_</code> — 동적 파라미터</li>
+</ul>
+<hr />
+<h3 id="optimizercpp-mppi"><code>optimizer.cpp</code> — MPPI 최적화 엔진</h3>
+<p><strong>클래스</strong>: <code>mppi::Optimizer</code>
+<strong>역할</strong>: MPPI 알고리즘 전체 실행. 노이즈 생성 → 궤적 롤아웃 → 비용 평가 → 제어 업데이트의 루프를 관리.</p>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>initialize(parent, name, costmap_ros, tf_buffer, param_handler)</code></td>
+<td>CriticManager, NoiseGenerator, MotionModel, TrajectoryValidator 초기화</td>
+</tr>
+<tr>
+<td><code>evalControl(pose, speed, plan, goal, checker)</code></td>
+<td><strong>외부 호출 진입점</strong>: <code>prepare()→optimize()→validate()</code> 반복 후 TwistStamped + 궤적 반환</td>
+</tr>
+<tr>
+<td><code>optimize()</code></td>
+<td><code>iteration_count</code>회 반복: <code>generateNoisedTrajectories()→evalTrajectoriesScores()→updateControlSequence()</code></td>
+</tr>
+<tr>
+<td><code>prepare(pose, speed, plan, goal, checker)</code></td>
+<td>로봇 상태와 참조 경로를 <code>State</code>, <code>Path</code> 구조체로 변환</td>
+</tr>
+<tr>
+<td><code>generateNoisedTrajectories()</code></td>
+<td>NoiseGenerator 이용해 배치 제어 시퀀스 생성 후 Motion Model로 궤적 적분</td>
+</tr>
+<tr>
+<td><code>integrateStateVelocities(traj, state)</code></td>
+<td>속도를 RK(Euler) 방식으로 적분해 x,y,yaw 궤적 생성</td>
+</tr>
+<tr>
+<td><code>updateControlSequence()</code></td>
+<td>소프트맥스 가중 평균으로 최적 제어 시퀀스 갱신, S-G 필터 적용</td>
+</tr>
+<tr>
+<td><code>getOptimizedTrajectory()</code></td>
+<td>최적 제어 시퀀스로 단일 궤적 계산 후 반환</td>
+</tr>
+<tr>
+<td><code>fallback(fail)</code></td>
+<td>실패 시 리셋 후 재시도. <code>retry_attempt_limit</code> 초과 시 예외 발생</td>
+</tr>
+<tr>
+<td><code>reset(reset_dynamic_speed_limits)</code></td>
+<td>상태/비용/히스토리 배열 초기화</td>
+</tr>
+<tr>
+<td><code>setSpeedLimit(speed_limit, percentage)</code></td>
+<td>제약 조건 동적 업데이트</td>
+</tr>
+<tr>
+<td><code>setMotionModel(name)</code></td>
+<td>pluginlib으로 MotionModel 플러그인 로드</td>
+</tr>
+<tr>
+<td><code>shiftControlSequence()</code></td>
+<td>제어 시퀀스를 1스텝 앞으로 시프트 (lookahead)</td>
+</tr>
+<tr>
+<td><code>getControlFromSequenceAsTwist(stamp)</code></td>
+<td>시퀀스 첫 번째 제어를 TwistStamped로 변환</td>
+</tr>
+<tr>
+<td><code>isHolonomic()</code></td>
+<td>홀로노믹 로봇 여부 반환</td>
+</tr>
+<tr>
+<td><code>isSpeedLimitActive()</code></td>
+<td>현재 속도 제한 활성 여부</td>
+</tr>
+</tbody>
+</table>
+<p><strong>핵심 멤버 변수</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>변수</th>
+<th>타입</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>state_</code></td>
+<td><code>models::State</code></td>
+<td>배치 속도 상태 <code>[batch_size × time_steps]</code></td>
+</tr>
+<tr>
+<td><code>control_sequence_</code></td>
+<td><code>models::ControlSequence</code></td>
+<td>현재 최적 제어 시퀀스 <code>[time_steps]</code></td>
+</tr>
+<tr>
+<td><code>generated_trajectories_</code></td>
+<td><code>models::Trajectories</code></td>
+<td>생성된 후보 궤적 <code>[batch_size × time_steps]</code></td>
+</tr>
+<tr>
+<td><code>costs_</code></td>
+<td><code>Eigen::ArrayXf</code></td>
+<td>각 궤적의 총 비용 <code>[batch_size]</code></td>
+</tr>
+<tr>
+<td><code>critics_data_</code></td>
+<td><code>CriticData</code></td>
+<td>모든 Critic에 전달되는 공유 데이터</td>
+</tr>
+<tr>
+<td><code>control_history_</code></td>
+<td><code>std::array&lt;Control, 4&gt;</code></td>
+<td>최근 4개의 제어 명령 (S-G 필터용)</td>
+</tr>
+<tr>
+<td><code>settings_</code></td>
+<td><code>models::OptimizerSettings</code></td>
+<td>MPPI 파라미터 전체</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="critic_managercpp-critic"><code>critic_manager.cpp</code> — Critic 플러그인 관리자</h3>
+<p><strong>클래스</strong>: <code>mppi::CriticManager</code>
+<strong>역할</strong>: pluginlib을 통해 CriticFunction 플러그인들을 로드하고, 매 반복마다 모든 Critic을 실행하여 비용 배열을 채움.</p>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>on_configure(parent, name, costmap_ros, param_handler)</code></td>
+<td>파라미터에서 critic 이름 목록 읽어 pluginlib으로 로드 및 초기화</td>
+</tr>
+<tr>
+<td><code>evalTrajectoriesScores(data)</code></td>
+<td>로드된 모든 Critic의 <code>score(data)</code> 순서대로 호출. <code>data.costs</code>에 누적</td>
+</tr>
+<tr>
+<td><code>getCriticCosts()</code></td>
+<td>각 Critic별 개별 비용 반환 (디버깅용)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>로드 방식</strong>: <code>pluginlib::ClassLoader&lt;CriticFunction&gt;</code> 사용. critics.xml에 플러그인 등록.</p>
+<hr />
+<h3 id="noise_generatorcpp"><code>noise_generator.cpp</code> — 노이즈 샘플링</h3>
+<p><strong>클래스</strong>: <code>mppi::NoiseGenerator</code>
+<strong>역할</strong>: 제어 시퀀스에 추가할 가우시안 노이즈를 생성. 선택적으로 백그라운드 스레드로 병렬 생성 가능.</p>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>initialize(settings, is_holonomic, name, param_handler)</code></td>
+<td>노이즈 분포 설정, 스레드 옵션 설정</td>
+</tr>
+<tr>
+<td><code>setNoisedControls(state, control_sequence)</code></td>
+<td>현재 최적 제어 + 노이즈 → <code>state.cvx</code>, <code>state.cvy</code>, <code>state.cwz</code></td>
+</tr>
+<tr>
+<td><code>generateNextNoises()</code></td>
+<td>다음 반복에 쓸 노이즈를 미리 생성 (스레드 신호)</td>
+</tr>
+<tr>
+<td><code>reset(settings, is_holonomic)</code></td>
+<td>노이즈 배열 재초기화</td>
+</tr>
+<tr>
+<td><code>generateNoisedControls()</code></td>
+<td>실제 노이즈 샘플링 수행 (Eigen 배열에 저장)</td>
+</tr>
+<tr>
+<td><code>noiseThread()</code></td>
+<td>백그라운드 스레드 루프: <code>noise_cond_</code> 신호 대기 후 노이즈 생성</td>
+</tr>
+<tr>
+<td><code>shutdown()</code></td>
+<td>스레드 종료 처리</td>
+</tr>
+</tbody>
+</table>
+<p><strong>핵심 멤버</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>변수</th>
+<th>타입</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>noises_vx_</code>, <code>noises_vy_</code>, <code>noises_wz_</code></td>
+<td><code>Eigen::ArrayXXf</code></td>
+<td>노이즈 배열 <code>[batch_size × time_steps]</code></td>
+</tr>
+<tr>
+<td><code>ndistribution_vx_</code>, <code>ndistribution_vy_</code>, <code>ndistribution_wz_</code></td>
+<td><code>std::normal_distribution&lt;float&gt;</code></td>
+<td>각 축의 정규분포</td>
+</tr>
+<tr>
+<td><code>noise_thread_</code></td>
+<td><code>std::thread</code></td>
+<td>비동기 노이즈 생성 스레드</td>
+</tr>
+<tr>
+<td><code>noise_cond_</code></td>
+<td><code>std::condition_variable</code></td>
+<td>스레드 동기화</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="motion_modelscpp"><code>motion_models.cpp</code> — 운동 모델</h3>
+<p><strong>기반 클래스</strong>: <code>mppi::MotionModel</code> (추상)
+<strong>역할</strong>: 로봇의 운동학(kinematics)/동역학 제약을 모델링. 제어 입력을 실제 달성 가능한 속도로 변환.</p>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>predict(state)</code></td>
+<td>모든 배치에 대해 현재 속도에서 제어 목표까지 가속도 제약 내로 속도 업데이트</td>
+</tr>
+<tr>
+<td><code>setConstraints(constraints, model_dt)</code></td>
+<td>속도·가속도 한계 설정</td>
+</tr>
+<tr>
+<td><code>applyConstraints(state)</code></td>
+<td>서브클래스별 추가 제약 적용 (순수 가상)</td>
+</tr>
+<tr>
+<td><code>isHolonomic()</code></td>
+<td>홀로노믹 여부 (순수 가상)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>구현체 세 종류</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>클래스</th>
+<th>적용 로봇</th>
+<th><code>isHolonomic()</code></th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DiffDriveMotionModel</code></td>
+<td>차동 구동</td>
+<td><code>false</code></td>
+<td><code>vy=0</code> 강제, vx·wz만 제어</td>
+</tr>
+<tr>
+<td><code>OmniMotionModel</code></td>
+<td>전방향 이동</td>
+<td><code>true</code></td>
+<td>vx, vy, wz 모두 독립 제어</td>
+</tr>
+<tr>
+<td><code>AckermannMotionModel</code></td>
+<td>자동차형 조향</td>
+<td><code>false</code></td>
+<td>최소 회전 반경 강제: <code>wz ≤ vx / r_min</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>AckermannMotionModel</code> 추가 메서드</strong>:</p>
+<ul>
+<li><code>getMinTurningRadius()</code>: 파라미터로 설정된 최소 회전 반경 반환</li>
+<li><code>applyConstraints(state)</code>: wz 값을 최소 회전 반경에 맞게 클램핑</li>
+</ul>
+<hr />
+<h3 id="parameters_handlercpp"><code>parameters_handler.cpp</code> — 동적 파라미터 관리</h3>
+<p><strong>클래스</strong>: <code>mppi::ParametersHandler</code>
+<strong>역할</strong>: ROS2 <code>rcl_interfaces</code>의 동적 파라미터 업데이트를 관리. 검증(pre-callback) → 적용(post-callback) 파이프라인 제공.</p>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>getParamGetter(ns)</code></td>
+<td>네임스페이스 지정된 파라미터 읽기 람다 반환. <code>declare_parameter_if_not_declared</code> 포함</td>
+</tr>
+<tr>
+<td><code>setParamCallback()</code></td>
+<td>동적 파라미터 콜백 등록</td>
+</tr>
+<tr>
+<td><code>addPreCallback(param_name, callback)</code></td>
+<td>파라미터 업데이트 전 검증 콜백 등록</td>
+</tr>
+<tr>
+<td><code>addPostCallback(callback)</code></td>
+<td>파라미터 업데이트 후 실행될 콜백 등록</td>
+</tr>
+<tr>
+<td><code>validateParameterUpdatesCallback(params)</code></td>
+<td>등록된 pre-callback 모두 실행, 하나라도 실패하면 거부</td>
+</tr>
+<tr>
+<td><code>updateParametersCallback(params)</code></td>
+<td>등록된 post-callback 실행 (파라미터 적용 완료 후)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>설계 특징</strong>:</p>
+<ul>
+<li>뮤텍스(<code>std::mutex</code>)로 파라미터 변경 중 레이스 컨디션 방지</li>
+<li>속도 제한 활성 상태에서 운동학 파라미터 업데이트 거부 (kinematic_guard)</li>
+</ul>
+<hr />
+<h3 id="trajectory_visualizercpp"><code>trajectory_visualizer.cpp</code> — 시각화</h3>
+<p><strong>클래스</strong>: <code>mppi::TrajectoryVisualizer</code>
+<strong>역할</strong>: 후보 궤적들과 최적 궤적을 RViz MarkerArray로 퍼블리시. 비용에 따른 색상 그라디언트 적용.</p>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>on_configure(parent, name, costmap_frame, node)</code></td>
+<td>퍼블리셔 생성 (<code>candidate_trajectories</code>, <code>optimal_path</code>)</td>
+</tr>
+<tr>
+<td><code>add(trajectory, ns, stamp)</code></td>
+<td>최적 궤적을 <code>nav_msgs/Path</code>로 추가</td>
+</tr>
+<tr>
+<td><code>add(trajectories, costs, collisions, stamp)</code></td>
+<td>후보 궤적들을 비용에 따른 색상으로 MarkerArray에 추가</td>
+</tr>
+<tr>
+<td><code>visualize(stamp)</code></td>
+<td>모든 마커 퍼블리시 후 버퍼 초기화</td>
+</tr>
+<tr>
+<td><code>costToColor(cost, min_cost, max_cost)</code></td>
+<td>비용값을 초록(낮음)→노랑→빨강(높음) 색상으로 변환</td>
+</tr>
+<tr>
+<td><code>addCostColoredTrajectory(traj, cost, stamp)</code></td>
+<td>LINE_STRIP 마커로 단일 궤적 추가</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="optimal_trajectory_validatorcpp"><code>optimal_trajectory_validator.cpp</code> — 궤적 유효성 검사</h3>
+<p><strong>클래스</strong>: <code>mppi::DefaultOptimalTrajectoryValidator</code>
+<strong>기반 클래스</strong>: <code>mppi::OptimalTrajectoryValidator</code> (pluginlib 추상)
+<strong>역할</strong>: 최적화된 궤적이 실제로 충돌 없이 주행 가능한지 검사. 실패 시 재시도 또는 하드 실패 트리거.</p>
+<p><strong>반환 열거형</strong>:</p>
+<table>
+<thead>
+<tr>
+<th><code>ValidationResult</code></th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SUCCESS</code></td>
+<td>궤적 유효, 그대로 사용</td>
+</tr>
+<tr>
+<td><code>SOFT_RESET</code></td>
+<td>충돌 감지, 옵티마이저 리셋 후 재시도</td>
+</tr>
+<tr>
+<td><code>FAILURE</code></td>
+<td>복구 불가, <code>NoValidControl</code> 예외 발생</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>initialize(parent, name, costmap_ros, param_handler, tf_buffer, settings)</code></td>
+<td>충돌 검사기 설정</td>
+</tr>
+<tr>
+<td><code>validateTrajectory(optimal_traj, control_seq, pose, speed, plan, goal)</code></td>
+<td>궤적 점들을 코스트맵으로 충돌 검사</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="critic">Critic 구현체들</h3>
+<p>모든 Critic은 <code>mppi::critics::CriticFunction</code>을 상속하며 <code>score(CriticData &amp; data)</code> 메서드로 <code>data.costs</code>에 비용을 누적합니다.</p>
+<h4 id="_6">공통 파라미터</h4>
+<table>
+<thead>
+<tr>
+<th>파라미터</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td>Critic 활성화 여부</td>
+</tr>
+<tr>
+<td><code>cost_weight</code></td>
+<td>이 Critic 비용의 전체 가중치</td>
+</tr>
+<tr>
+<td><code>cost_power</code></td>
+<td>비용에 지수 승 적용 (<code>cost^power</code>)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="constraintcritic"><code>ConstraintCritic</code></h4>
+<p><strong>목적</strong>: 속도 제약 조건 위반 궤적에 페널티 부여.</p>
+<p>비용 계산:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cost += weight * (|vx| &gt; vx_max || |vx| &lt; vx_min || |vy| &gt; vy_max || |wz| &gt; wz_max 인 스텝 수)^power
+</code></pre></div>
+<h4 id="costcritic"><code>CostCritic</code></h4>
+<p><strong>목적</strong>: 코스트맵의 인플레이션 레이어 비용을 기반으로 장애물 근접 회피.</p>
+<p>비용 계산:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>- footprint 고려 시: 실제 발자국 형태로 충돌 검사
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>- 포인트 검사 시: 해당 셀의 코스트 값 직접 사용
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>- critical_cost 이상이면 해당 궤적 fail_flag 설정
+</code></pre></div>
+<h4 id="goalcritic"><code>GoalCritic</code></h4>
+<p><strong>목적</strong>: 궤적 끝점을 목표 지점으로 유도.</p>
+<p>비용 계산:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>goal_dist = ||trajectory_endpoint - goal||
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>cost += weight * goal_dist^power  (목표 근처에서만 활성)
+</code></pre></div>
+<h4 id="goalanglecritic"><code>GoalAngleCritic</code></h4>
+<p><strong>목적</strong>: 목표에 가까워졌을 때 목표 방향(heading)으로 정렬.</p>
+<p>비용 계산:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>angle_diff = |yaw_trajectory - yaw_goal|
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>cost += weight * angle_diff^power  (목표 반경 내에서만 활성, symmetric_yaw 옵션 지원)
+</code></pre></div>
+<h4 id="obstaclescritic"><code>ObstaclesCritic</code></h4>
+<p><strong>목적</strong>: 동적 장애물 회피. CostCritic보다 여유 마진을 더 두어 작동.</p>
+<p>비용 계산:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>- collision_margin_distance 이내 접근 시 반발력 비용
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>- repulsion_weight * (1 - dist/margin)^power
+</code></pre></div>
+<h4 id="pathaligncritic"><code>PathAlignCritic</code></h4>
+<p><strong>목적</strong>: 궤적이 참조 경로와 공간적으로 정렬되도록 강제.</p>
+<p>비용 계산:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>nearest_path_point_dist = min(||traj_point - path_point|| for each step)
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>cost += weight * sum(nearest_dist)^power
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>(use_path_orientations=true이면 방향 오차도 포함)
+</code></pre></div>
+<h4 id="pathanglecritic"><code>PathAngleCritic</code></h4>
+<p><strong>목적</strong>: 궤적의 헤딩이 경로 방향과 일치하도록 강제.</p>
+<p><strong>PathAngleMode 열거형</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>모드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FORWARD_PREFERENCE</code></td>
+<td>전진 방향 우선</td>
+</tr>
+<tr>
+<td><code>NO_DIRECTIONAL_PREFERENCE</code></td>
+<td>방향 무관 (대칭)</td>
+</tr>
+<tr>
+<td><code>CONSIDER_FEASIBLE_PATH_ORIENTATIONS</code></td>
+<td>경로상 실현 가능 방향만 고려</td>
+</tr>
+</tbody>
+</table>
+<h4 id="pathfollowcritic"><code>PathFollowCritic</code></h4>
+<p><strong>목적</strong>: 경로상 <code>offset_from_furthest</code> 앞 지점을 향해 궤적을 유도. 경로 진행률 극대화.</p>
+<p>비용 계산:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lookahead_point = path[furthest_reached_idx + offset_from_furthest]
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>cost += weight * ||trajectory_end - lookahead_point||^power
+</code></pre></div>
+<h4 id="preferforwardcritic"><code>PreferForwardCritic</code></h4>
+<p><strong>목적</strong>: 후진(vx &lt; 0) 궤적에 페널티. 전진 우선 이동 강제.</p>
+<p>비용 계산:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>cost += weight * (vx &lt; 0인 스텝 수)^power
+</code></pre></div>
+<h4 id="twirlingcritic"><code>TwirlingCritic</code></h4>
+<p><strong>목적</strong>: 불필요한 회전 진동(wz 변화) 억제.</p>
+<p>비용 계산:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>cost += weight * sum(|wz|)^power
+</code></pre></div>
+<h4 id="velocitydeadbandcritic"><code>VelocityDeadbandCritic</code></h4>
+<p><strong>목적</strong>: 설정된 속도 데드밴드 내 작은 속도 명령 억제 (정지/미끄러짐 방지).</p>
+<p>비용 계산:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>deadband_velocities = [vx_deadband, vy_deadband, wz_deadband]
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>cost += weight * (각 축에서 |v| &lt; deadband 인 스텝 수)^power
+</code></pre></div>
+<hr />
+<h3 id="_7">데이터 모델 헤더</h3>
+<h4 id="modelsstatehpp-mppimodelsstate"><code>models/state.hpp</code> — <code>mppi::models::State</code></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">State</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="n">Eigen</span><span class="o">::</span><span class="n">ArrayXXf</span><span class="w"> </span><span class="n">vx</span><span class="p">,</span><span class="w"> </span><span class="n">vy</span><span class="p">,</span><span class="w"> </span><span class="n">wz</span><span class="p">;</span><span class="w">     </span><span class="c1">// 실제 달성 속도 [batch_size × time_steps]</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="n">Eigen</span><span class="o">::</span><span class="n">ArrayXXf</span><span class="w"> </span><span class="n">cvx</span><span class="p">,</span><span class="w"> </span><span class="n">cvy</span><span class="p">,</span><span class="w"> </span><span class="n">cwz</span><span class="p">;</span><span class="w">  </span><span class="c1">// 제어 목표 속도 (optimal + noise) [batch_size × time_steps]</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PoseStamped</span><span class="w"> </span><span class="n">pose</span><span class="p">;</span><span class="w">  </span><span class="c1">// 현재 로봇 포즈</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Twist</span><span class="w"> </span><span class="n">speed</span><span class="p">;</span><span class="w">       </span><span class="c1">// 현재 로봇 속도</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">local_path_length</span><span class="p">;</span><span class="w">               </span><span class="c1">// 로컬 경로 길이</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="p">};</span>
+</code></pre></div>
+<h4 id="modelscontrol_sequencehpp-mppimodelscontrolsequence"><code>models/control_sequence.hpp</code> — <code>mppi::models::ControlSequence</code></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">ControlSequence</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="n">Eigen</span><span class="o">::</span><span class="n">ArrayXf</span><span class="w"> </span><span class="n">vx</span><span class="p">,</span><span class="w"> </span><span class="n">vy</span><span class="p">,</span><span class="w"> </span><span class="n">wz</span><span class="p">;</span><span class="w">  </span><span class="c1">// 최적 제어 시퀀스 [time_steps]</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">time_steps</span><span class="p">);</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="p">};</span>
+</code></pre></div>
+<h4 id="modelstrajectorieshpp-mppimodelstrajectories"><code>models/trajectories.hpp</code> — <code>mppi::models::Trajectories</code></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Trajectories</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="n">Eigen</span><span class="o">::</span><span class="n">ArrayXXf</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">yaws</span><span class="p">;</span><span class="w">  </span><span class="c1">// 후보 궤적 위치/방향 [batch_size × time_steps]</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">batch_size</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">time_steps</span><span class="p">);</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">};</span>
+</code></pre></div>
+<h4 id="modelspathhpp-mppimodelspath"><code>models/path.hpp</code> — <code>mppi::models::Path</code></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Path</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="n">Eigen</span><span class="o">::</span><span class="n">ArrayXf</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">yaws</span><span class="p">;</span><span class="w">  </span><span class="c1">// 참조 경로 웨이포인트</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">};</span>
+</code></pre></div>
+<h4 id="modelsconstraintshpp"><code>models/constraints.hpp</code></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">ControlConstraints</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">vx_max</span><span class="p">,</span><span class="w"> </span><span class="n">vx_min</span><span class="p">;</span><span class="w">         </span><span class="c1">// 전진/후진 최대 속도</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">vy</span><span class="p">;</span><span class="w">                     </span><span class="c1">// 횡방향 최대 속도</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">wz</span><span class="p">;</span><span class="w">                     </span><span class="c1">// 최대 각속도</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">ax_max</span><span class="p">,</span><span class="w"> </span><span class="n">ax_min</span><span class="p">;</span><span class="w">         </span><span class="c1">// 전/후 최대 가속도</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">ay_max</span><span class="p">,</span><span class="w"> </span><span class="n">ay_min</span><span class="p">;</span><span class="w">         </span><span class="c1">// 횡 최대 가속도</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">az_max</span><span class="p">;</span><span class="w">                 </span><span class="c1">// 최대 각가속도</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="p">};</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="k">struct</span><span class="w"> </span><span class="nc">SamplingStd</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">vx</span><span class="p">,</span><span class="w"> </span><span class="n">vy</span><span class="p">,</span><span class="w"> </span><span class="n">wz</span><span class="p">;</span><span class="w">             </span><span class="c1">// 노이즈 샘플링 표준편차</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="p">};</span>
+</code></pre></div>
+<h4 id="critic_datahpp-mppicriticdata"><code>critic_data.hpp</code> — <code>mppi::CriticData</code></h4>
+<p>모든 Critic에 전달되는 공유 참조 컨테이너:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CriticData</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">models</span><span class="o">::</span><span class="n">State</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">;</span><span class="w">                  </span><span class="c1">// 배치 속도 상태</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">models</span><span class="o">::</span><span class="n">Trajectories</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">trajectories</span><span class="p">;</span><span class="w">    </span><span class="c1">// 후보 궤적</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">models</span><span class="o">::</span><span class="n">Path</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">path</span><span class="p">;</span><span class="w">                    </span><span class="c1">// 참조 경로</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">goal</span><span class="p">;</span><span class="w">        </span><span class="c1">// 목표 포즈</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span><span class="n">Eigen</span><span class="o">::</span><span class="n">ArrayXf</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">costs</span><span class="p">;</span><span class="w">                       </span><span class="c1">// 누적 비용 [batch_size]</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">model_dt</span><span class="p">;</span><span class="w">                               </span><span class="c1">// 모델 타임스텝</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">fail_flag</span><span class="p">;</span><span class="w">                             </span><span class="c1">// 실패 플래그</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">  </span><span class="n">nav2_core</span><span class="o">::</span><span class="n">GoalChecker</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">goal_checker</span><span class="p">;</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">furthest_reached_path_point</span><span class="p">;</span><span class="w">  </span><span class="c1">// 경로상 최대 도달 지점 (캐시)</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">ArrayXf</span><span class="o">&gt;</span><span class="w"> </span><span class="n">path_pts_valid</span><span class="p">;</span><span class="w">        </span><span class="c1">// 경로 점 유효성 캐시</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="p">};</span>
+</code></pre></div>
+<hr />
+<h3 id="utilshpp"><code>utils.hpp</code> — 유틸리티 함수</h3>
+<p><code>mppi::utils</code> 네임스페이스에 정적 인라인 함수 모음.</p>
+<p><strong>기하 유틸리티</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>함수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>createPose(x, y, z)</code></td>
+<td>geometry_msgs::Pose 생성</td>
+</tr>
+<tr>
+<td><code>createScale(x, y, z)</code></td>
+<td>Vector3 생성</td>
+</tr>
+<tr>
+<td><code>createColor(r, g, b, a)</code></td>
+<td>ColorRGBA 생성</td>
+</tr>
+<tr>
+<td><code>createMarker(id, pose, scale, color, frame)</code></td>
+<td>마커 메시지 생성</td>
+</tr>
+<tr>
+<td><code>toTwistStamped(vx, vy, wz, stamp)</code></td>
+<td>TwistStamped 메시지 생성</td>
+</tr>
+<tr>
+<td><code>toTensor(path, tensor, point_count)</code></td>
+<td>nav_msgs::Path → <code>models::Path</code> 변환</td>
+</tr>
+<tr>
+<td><code>toTrajectoryMsg(trajectory, frame, stamp)</code></td>
+<td>Eigen 배열 → <code>nav_msgs::Trajectory</code> 변환</td>
+</tr>
+</tbody>
+</table>
+<p><strong>수학 유틸리티</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>함수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>normalize_angles(angles)</code></td>
+<td>각도를 <span class="arithmatex">\([-\pi, \pi]\)</span>로 정규화 (Eigen 배열)</td>
+</tr>
+<tr>
+<td><code>shortest_angular_distance(from, to)</code></td>
+<td>최단 각도 차이 계산</td>
+</tr>
+<tr>
+<td><code>posePointAngle(pose, px, py, forward)</code></td>
+<td>포즈에서 점까지의 각도</td>
+</tr>
+<tr>
+<td><code>savitskyGolayFilter(sequence, sgf_order)</code></td>
+<td>9포인트 Savitzky-Golay 필터로 제어 시퀀스 스무딩</td>
+</tr>
+<tr>
+<td><code>shiftColumnsByOnePlace(matrix, direction)</code></td>
+<td>행렬 열을 1칸 시프트 (lookahead용)</td>
+</tr>
+<tr>
+<td><code>normalize_yaws_between_points(path)</code></td>
+<td>경로 점 간 연속적인 yaw 계산</td>
+</tr>
+<tr>
+<td><code>clamp(value, min, max)</code></td>
+<td>값 클램핑</td>
+</tr>
+<tr>
+<td><code>clampVelocityByAccel(v_curr, v_target, accel_max, dt)</code></td>
+<td>가속도 제약 내 속도 클램핑</td>
+</tr>
+</tbody>
+</table>
+<p><strong>경로 유틸리티</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>함수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>findPathFurthestReachedPoint(data)</code></td>
+<td>배치 궤적에서 경로상 가장 멀리 도달한 인덱스 탐색</td>
+</tr>
+<tr>
+<td><code>findPathCosts(data, checker, costmap_ros)</code></td>
+<td>경로 점들의 코스트맵 비용 평가</td>
+</tr>
+<tr>
+<td><code>setPathFurthestPointIfNotSet(data)</code></td>
+<td><code>furthest_reached_path_point</code> 레이지 초기화</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_8">파일 간 연계 관계 도식도</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>│                           Nav2 Controller Server                        │
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>│                    (nav2_controller::ControllerServer)                  │
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>└───────────────────────────────┬─────────────────────────────────────────┘
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>                                │ nav2_core::Controller 인터페이스
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>                                ▼
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>│                       MPPIController (controller.cpp)                   │
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>│   - configure() / activate() / deactivate() / cleanup()                 │
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>│   - computeVelocityCommands() ──────────────────────────────────────┐   │
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>│   - setPath() / setSpeedLimit()                                     │   │
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>└─────────┬───────────────────────────────┬───────────────────────────┼───┘
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>          │                               │                           │
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>          ▼                               ▼                           │
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>┌──────────────────────┐    ┌────────────────────────────┐           │
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>│  ParametersHandler   │    │   TrajectoryVisualizer     │           │
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>│  - getParamGetter()  │    │   - add() / visualize()    │           │
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>│  - addPreCallback()  │    │   - costToColor()          │           │
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>│  - addPostCallback() │    └────────────────────────────┘           │
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>└──────────┬───────────┘                                              │
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>           │ (공유 참조)                                               │
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>           ▼                                                           ▼
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>│                         Optimizer (optimizer.cpp)                        │
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>│                                                                          │
+<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>│  evalControl()                                                           │
+<a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a>│    ├─ prepare()          → State, Path 초기화                            │
+<a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a>│    ├─ optimize() [N회]                                                   │
+<a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a>│    │   ├─ generateNoisedTrajectories()                                   │
+<a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a>│    │   │   ├── NoiseGenerator.setNoisedControls()  ──────────────────┐  │
+<a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a>│    │   │   └── MotionModel.predict() + integrateStateVelocities()     │  │
+<a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a>│    │   ├─ CriticManager.evalTrajectoriesScores()   ──────────────┐   │  │
+<a id="__codelineno-17-33" name="__codelineno-17-33" href="#__codelineno-17-33"></a>│    │   └─ updateControlSequence()   (softmax + S-G filter)       │   │  │
+<a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a>│    ├─ getOptimizedTrajectory()                                    │   │  │
+<a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a>│    └─ TrajectoryValidator.validateTrajectory()  ──────────────┐  │   │  │
+<a id="__codelineno-17-36" name="__codelineno-17-36" href="#__codelineno-17-36"></a>│                                                               │  │   │  │
+<a id="__codelineno-17-37" name="__codelineno-17-37" href="#__codelineno-17-37"></a>└───────────────────────────────────────────────────────────────┼──┼───┼──┘
+<a id="__codelineno-17-38" name="__codelineno-17-38" href="#__codelineno-17-38"></a>                                                                │  │   │
+<a id="__codelineno-17-39" name="__codelineno-17-39" href="#__codelineno-17-39"></a>        ┌───────────────────────────────────────────────────────┘  │   │
+<a id="__codelineno-17-40" name="__codelineno-17-40" href="#__codelineno-17-40"></a>        ▼                                                           │   │
+<a id="__codelineno-17-41" name="__codelineno-17-41" href="#__codelineno-17-41"></a>┌───────────────────────────────────────────┐                      │   │
+<a id="__codelineno-17-42" name="__codelineno-17-42" href="#__codelineno-17-42"></a>│  DefaultOptimalTrajectoryValidator        │                      │   │
+<a id="__codelineno-17-43" name="__codelineno-17-43" href="#__codelineno-17-43"></a>│  (trajectory_validators/...)              │                      │   │
+<a id="__codelineno-17-44" name="__codelineno-17-44" href="#__codelineno-17-44"></a>│  - validateTrajectory()                   │                      │   │
+<a id="__codelineno-17-45" name="__codelineno-17-45" href="#__codelineno-17-45"></a>│    → SUCCESS / SOFT_RESET / FAILURE       │                      │   │
+<a id="__codelineno-17-46" name="__codelineno-17-46" href="#__codelineno-17-46"></a>└───────────────────────────────────────────┘                      │   │
+<a id="__codelineno-17-47" name="__codelineno-17-47" href="#__codelineno-17-47"></a>                                                                    │   │
+<a id="__codelineno-17-48" name="__codelineno-17-48" href="#__codelineno-17-48"></a>        ┌───────────────────────────────────────────────────────────┘   │
+<a id="__codelineno-17-49" name="__codelineno-17-49" href="#__codelineno-17-49"></a>        ▼                                                                │
+<a id="__codelineno-17-50" name="__codelineno-17-50" href="#__codelineno-17-50"></a>┌──────────────────────────────────────────────────────────────────┐    │
+<a id="__codelineno-17-51" name="__codelineno-17-51" href="#__codelineno-17-51"></a>│                    CriticManager (critic_manager.cpp)             │    │
+<a id="__codelineno-17-52" name="__codelineno-17-52" href="#__codelineno-17-52"></a>│  - evalTrajectoriesScores(CriticData)                            │    │
+<a id="__codelineno-17-53" name="__codelineno-17-53" href="#__codelineno-17-53"></a>│    → 각 Critic의 score() 순서대로 호출                            │    │
+<a id="__codelineno-17-54" name="__codelineno-17-54" href="#__codelineno-17-54"></a>└─────────────────────────┬────────────────────────────────────────┘    │
+<a id="__codelineno-17-55" name="__codelineno-17-55" href="#__codelineno-17-55"></a>                          │ pluginlib 로드                                │
+<a id="__codelineno-17-56" name="__codelineno-17-56" href="#__codelineno-17-56"></a>                          ▼                                              │
+<a id="__codelineno-17-57" name="__codelineno-17-57" href="#__codelineno-17-57"></a>┌─────────────────────────────────────────────────────────────────────┐ │
+<a id="__codelineno-17-58" name="__codelineno-17-58" href="#__codelineno-17-58"></a>│              CriticFunction 구현체들 (critics/*.cpp)                 │ │
+<a id="__codelineno-17-59" name="__codelineno-17-59" href="#__codelineno-17-59"></a>│                                                                      │ │
+<a id="__codelineno-17-60" name="__codelineno-17-60" href="#__codelineno-17-60"></a>│  ConstraintCritic    GoalCritic        PathFollowCritic             │ │
+<a id="__codelineno-17-61" name="__codelineno-17-61" href="#__codelineno-17-61"></a>│  CostCritic          GoalAngleCritic   PathAlignCritic              │ │
+<a id="__codelineno-17-62" name="__codelineno-17-62" href="#__codelineno-17-62"></a>│  ObstaclesCritic     PathAngleCritic   PreferForwardCritic          │ │
+<a id="__codelineno-17-63" name="__codelineno-17-63" href="#__codelineno-17-63"></a>│  TwirlingCritic      VelocityDeadbandCritic                         │ │
+<a id="__codelineno-17-64" name="__codelineno-17-64" href="#__codelineno-17-64"></a>│                                                                      │ │
+<a id="__codelineno-17-65" name="__codelineno-17-65" href="#__codelineno-17-65"></a>│  공통: score(CriticData&amp;) → data.costs[batch] += 비용 누적          │ │
+<a id="__codelineno-17-66" name="__codelineno-17-66" href="#__codelineno-17-66"></a>└─────────────────────────────────────────────────────────────────────┘ │
+<a id="__codelineno-17-67" name="__codelineno-17-67" href="#__codelineno-17-67"></a>                                                                         │
+<a id="__codelineno-17-68" name="__codelineno-17-68" href="#__codelineno-17-68"></a>        ┌────────────────────────────────────────────────────────────────┘
+<a id="__codelineno-17-69" name="__codelineno-17-69" href="#__codelineno-17-69"></a>        ▼
+<a id="__codelineno-17-70" name="__codelineno-17-70" href="#__codelineno-17-70"></a>┌──────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-17-71" name="__codelineno-17-71" href="#__codelineno-17-71"></a>│                  NoiseGenerator (noise_generator.cpp)                 │
+<a id="__codelineno-17-72" name="__codelineno-17-72" href="#__codelineno-17-72"></a>│  - noises_vx_, noises_vy_, noises_wz_ [batch_size × time_steps]     │
+<a id="__codelineno-17-73" name="__codelineno-17-73" href="#__codelineno-17-73"></a>│  - 선택적 백그라운드 스레드 (noise_thread_)                           │
+<a id="__codelineno-17-74" name="__codelineno-17-74" href="#__codelineno-17-74"></a>│  - setNoisedControls() → state.cvx = optimal_control + noise         │
+<a id="__codelineno-17-75" name="__codelineno-17-75" href="#__codelineno-17-75"></a>└──────────────────────────────────────────────────────────────────────┘
+<a id="__codelineno-17-76" name="__codelineno-17-76" href="#__codelineno-17-76"></a>
+<a id="__codelineno-17-77" name="__codelineno-17-77" href="#__codelineno-17-77"></a>┌──────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-17-78" name="__codelineno-17-78" href="#__codelineno-17-78"></a>│                   MotionModel (motion_models.cpp)                    │
+<a id="__codelineno-17-79" name="__codelineno-17-79" href="#__codelineno-17-79"></a>│                  [pluginlib로 로드]                                   │
+<a id="__codelineno-17-80" name="__codelineno-17-80" href="#__codelineno-17-80"></a>│                                                                      │
+<a id="__codelineno-17-81" name="__codelineno-17-81" href="#__codelineno-17-81"></a>│  DiffDriveMotionModel:  vx, wz만 (vy=0 강제)                        │
+<a id="__codelineno-17-82" name="__codelineno-17-82" href="#__codelineno-17-82"></a>│  OmniMotionModel:       vx, vy, wz 독립                             │
+<a id="__codelineno-17-83" name="__codelineno-17-83" href="#__codelineno-17-83"></a>│  AckermannMotionModel:  최소 회전반경 강제                            │
+<a id="__codelineno-17-84" name="__codelineno-17-84" href="#__codelineno-17-84"></a>│                                                                      │
+<a id="__codelineno-17-85" name="__codelineno-17-85" href="#__codelineno-17-85"></a>│  predict(state): 가속도 제약 내에서 배치 속도 업데이트               │
+<a id="__codelineno-17-86" name="__codelineno-17-86" href="#__codelineno-17-86"></a>└──────────────────────────────────────────────────────────────────────┘
+<a id="__codelineno-17-87" name="__codelineno-17-87" href="#__codelineno-17-87"></a>
+<a id="__codelineno-17-88" name="__codelineno-17-88" href="#__codelineno-17-88"></a>┌──────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-17-89" name="__codelineno-17-89" href="#__codelineno-17-89"></a>│                  데이터 흐름 (Data Flow)                              │
+<a id="__codelineno-17-90" name="__codelineno-17-90" href="#__codelineno-17-90"></a>│                                                                      │
+<a id="__codelineno-17-91" name="__codelineno-17-91" href="#__codelineno-17-91"></a>│  nav_msgs::Path                                                      │
+<a id="__codelineno-17-92" name="__codelineno-17-92" href="#__codelineno-17-92"></a>│      ↓ toTensor()                                                    │
+<a id="__codelineno-17-93" name="__codelineno-17-93" href="#__codelineno-17-93"></a>│  models::Path (Eigen::ArrayXf x, y, yaws)                           │
+<a id="__codelineno-17-94" name="__codelineno-17-94" href="#__codelineno-17-94"></a>│                                                                      │
+<a id="__codelineno-17-95" name="__codelineno-17-95" href="#__codelineno-17-95"></a>│  models::ControlSequence (optimal)                                   │
+<a id="__codelineno-17-96" name="__codelineno-17-96" href="#__codelineno-17-96"></a>│      + noises_* (NoiseGenerator)                                     │
+<a id="__codelineno-17-97" name="__codelineno-17-97" href="#__codelineno-17-97"></a>│      → state.cvx/cvy/cwz [batch × time_steps]                       │
+<a id="__codelineno-17-98" name="__codelineno-17-98" href="#__codelineno-17-98"></a>│          ↓ MotionModel.predict()                                     │
+<a id="__codelineno-17-99" name="__codelineno-17-99" href="#__codelineno-17-99"></a>│      → state.vx/vy/wz (실제 달성 가능 속도)                          │
+<a id="__codelineno-17-100" name="__codelineno-17-100" href="#__codelineno-17-100"></a>│          ↓ integrateStateVelocities()                                │
+<a id="__codelineno-17-101" name="__codelineno-17-101" href="#__codelineno-17-101"></a>│      → Trajectories.x/y/yaws [batch × time_steps]                   │
+<a id="__codelineno-17-102" name="__codelineno-17-102" href="#__codelineno-17-102"></a>│          ↓ CriticManager.evalTrajectoriesScores()                    │
+<a id="__codelineno-17-103" name="__codelineno-17-103" href="#__codelineno-17-103"></a>│      → costs [batch_size]                                            │
+<a id="__codelineno-17-104" name="__codelineno-17-104" href="#__codelineno-17-104"></a>│          ↓ updateControlSequence() (softmax)                         │
+<a id="__codelineno-17-105" name="__codelineno-17-105" href="#__codelineno-17-105"></a>│      → ControlSequence (갱신된 최적 제어)                             │
+<a id="__codelineno-17-106" name="__codelineno-17-106" href="#__codelineno-17-106"></a>│          ↓ getControlFromSequenceAsTwist()                           │
+<a id="__codelineno-17-107" name="__codelineno-17-107" href="#__codelineno-17-107"></a>│      → TwistStamped (최종 속도 명령)                                 │
+<a id="__codelineno-17-108" name="__codelineno-17-108" href="#__codelineno-17-108"></a>└──────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<hr />
+<h2 id="_9">제어 루프 상세 흐름</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>매 컨트롤러 주기마다:
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>[1] MPPIController::computeVelocityCommands()
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>    │
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>    ▼
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>[2] Optimizer::evalControl(pose, speed, plan, goal, checker)
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>    │
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>    ├── [2a] prepare(pose, speed, plan, goal, checker)
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>    │         ├── 로봇 포즈/속도를 State에 저장
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>    │         ├── nav_msgs::Path → models::Path (Eigen 텐서) 변환
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>    │         ├── CriticData 초기화 (fail_flag=false, caches clear)
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>    │         └── open_loop 모드 시 마지막 명령으로 speed 대체
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>    │
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>    ├── [2b] optimize() ← iteration_count회 반복
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>    │         │
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>    │         ├── [i] generateNoisedTrajectories()
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>    │         │        ├── NoiseGenerator::setNoisedControls()
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>    │         │        │     state.cvx = control_sequence.vx (브로드캐스트)
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>    │         │        │              + noises_vx_ (배치 노이즈)
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>    │         │        ├── MotionModel::predict(state)
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a>    │         │        │     가속도 제약으로 v_actual 계산:
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>    │         │        │     v_next = clamp(v_target, v_curr ± a_max*dt)
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>    │         │        └── integrateStateVelocities(trajectories, state)
+<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a>    │         │              x += vx * cos(yaw) * dt - vy * sin(yaw) * dt
+<a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a>    │         │              y += vx * sin(yaw) * dt + vy * cos(yaw) * dt
+<a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>    │         │              yaw += wz * dt
+<a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a>    │         │
+<a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a>    │         ├── [ii] CriticManager::evalTrajectoriesScores(critics_data_)
+<a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a>    │         │         각 Critic::score(data) 순서대로:
+<a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a>    │         │         data.costs[k] += weight * cost(trajectory[k])^power
+<a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a>    │         │
+<a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a>    │         └── [iii] updateControlSequence()
+<a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a>    │                   β = min(costs)
+<a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a>    │                   w[k] = exp(-(costs[k]-β)/temperature)
+<a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a>    │                   w = w / sum(w)
+<a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a>    │                   control_sequence[t] = sum_k(w[k] * noised_control[k,t])
+<a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a>    │                   → savitskyGolayFilter(control_sequence, sgf_order)
+<a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a>    │                   → applyConstraints(control_sequence)
+<a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a>    │
+<a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a>    ├── [2c] getOptimizedTrajectory()
+<a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a>    │         최적 제어 시퀀스로 단일 궤적 계산 반환
+<a id="__codelineno-18-42" name="__codelineno-18-42" href="#__codelineno-18-42"></a>    │
+<a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a>    ├── [2d] TrajectoryValidator::validateTrajectory(optimal_traj, ...)
+<a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a>    │         → SUCCESS: 계속 진행
+<a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a>    │         → SOFT_RESET: reset() 후 [2b]로 재시도
+<a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a>    │         → FAILURE: NoValidControl 예외
+<a id="__codelineno-18-47" name="__codelineno-18-47" href="#__codelineno-18-47"></a>    │
+<a id="__codelineno-18-48" name="__codelineno-18-48" href="#__codelineno-18-48"></a>    ├── [2e] fallback(fail_flag || !trajectory_valid)
+<a id="__codelineno-18-49" name="__codelineno-18-49" href="#__codelineno-18-49"></a>    │         실패 시: reset() 후 전체 루프 재시도
+<a id="__codelineno-18-50" name="__codelineno-18-50" href="#__codelineno-18-50"></a>    │         retry_attempt_limit 초과 시: 예외 발생
+<a id="__codelineno-18-51" name="__codelineno-18-51" href="#__codelineno-18-51"></a>    │
+<a id="__codelineno-18-52" name="__codelineno-18-52" href="#__codelineno-18-52"></a>    └── [2f] getControlFromSequenceAsTwist(stamp)
+<a id="__codelineno-18-53" name="__codelineno-18-53" href="#__codelineno-18-53"></a>              control_sequence[0] → TwistStamped 반환
+<a id="__codelineno-18-54" name="__codelineno-18-54" href="#__codelineno-18-54"></a>              shift_control_sequence가 true이면 시퀀스 1스텝 앞으로 시프트
+</code></pre></div>
+<hr />
+<h2 id="_10">주요 파라미터 정리</h2>
+<h3 id="optimizer">Optimizer 파라미터</h3>
+<table>
+<thead>
+<tr>
+<th>파라미터</th>
+<th>기본값</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model_dt</code></td>
+<td>0.05</td>
+<td>운동 모델 시뮬레이션 타임스텝 (초). controller_frequency와 같아야 함</td>
+</tr>
+<tr>
+<td><code>time_steps</code></td>
+<td>56</td>
+<td>예측 수평선(horizon) 길이 (스텝 수). <code>model_dt × time_steps = 예측 시간</code></td>
+</tr>
+<tr>
+<td><code>batch_size</code></td>
+<td>1000</td>
+<td>매 반복마다 샘플링할 후보 궤적 수. 클수록 성능↑, 계산량↑</td>
+</tr>
+<tr>
+<td><code>iteration_count</code></td>
+<td>1</td>
+<td>MPPI 반복 횟수. 클수록 수렴 품질↑, 계산량↑</td>
+</tr>
+<tr>
+<td><code>temperature</code></td>
+<td>0.3</td>
+<td>소프트맥스 온도. 낮을수록 최저비용 궤적에 집중</td>
+</tr>
+<tr>
+<td><code>gamma</code></td>
+<td>0.015</td>
+<td>제어 크기 정규화 항 (정보이론적 탐색-이용 균형)</td>
+</tr>
+<tr>
+<td><code>vx_max</code></td>
+<td>0.5</td>
+<td>최대 전진 속도 (m/s)</td>
+</tr>
+<tr>
+<td><code>vx_min</code></td>
+<td>-0.35</td>
+<td>최대 후진 속도 (m/s, 음수)</td>
+</tr>
+<tr>
+<td><code>vy_max</code></td>
+<td>0.5</td>
+<td>최대 횡방향 속도 (홀로노믹만, m/s)</td>
+</tr>
+<tr>
+<td><code>wz_max</code></td>
+<td>1.9</td>
+<td>최대 각속도 (rad/s)</td>
+</tr>
+<tr>
+<td><code>ax_max</code> / <code>ax_min</code></td>
+<td>3.0 / -3.0</td>
+<td>전진/후진 최대 가속도 (m/s²)</td>
+</tr>
+<tr>
+<td><code>ay_max</code> / <code>ay_min</code></td>
+<td>3.0 / -3.0</td>
+<td>횡방향 최대 가속도 (m/s²)</td>
+</tr>
+<tr>
+<td><code>az_max</code></td>
+<td>3.5</td>
+<td>최대 각가속도 (rad/s²)</td>
+</tr>
+<tr>
+<td><code>vx_std</code></td>
+<td>0.2</td>
+<td>전진 속도 노이즈 표준편차</td>
+</tr>
+<tr>
+<td><code>vy_std</code></td>
+<td>0.2</td>
+<td>횡방향 속도 노이즈 표준편차</td>
+</tr>
+<tr>
+<td><code>wz_std</code></td>
+<td>0.4</td>
+<td>각속도 노이즈 표준편차</td>
+</tr>
+<tr>
+<td><code>motion_model</code></td>
+<td>"diff_drive"</td>
+<td>운동 모델 ("diff_drive" / "omni" / "ackermann")</td>
+</tr>
+<tr>
+<td><code>retry_attempt_limit</code></td>
+<td>1</td>
+<td>실패 시 재시도 횟수</td>
+</tr>
+<tr>
+<td><code>open_loop</code></td>
+<td>false</td>
+<td>true면 현재 속도 대신 마지막 명령 속도 사용</td>
+</tr>
+<tr>
+<td><code>sgf_order</code></td>
+<td>2</td>
+<td>Savitzky-Golay 필터 차수 (1 또는 2)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_11">커스텀 컨트롤러 패키지 개발 방향 추천</h2>
+<p>nav2_mppi_controller는 pluginlib 기반 확장 포인트 세 곳을 제공한다. 아래에서는 각 방향의 구체적인 구현 방법과 활용 시나리오를 설명한다.</p>
+<h3 id="1-critic">방향 1: 커스텀 Critic 개발 (가장 추천)</h3>
+<p><strong>언제 사용하나</strong>: 기존 Critic 조합으로 원하는 주행 특성을 만들 수 없을 때. 예) 특정 구역 회피, 사람 추적, 에너지 효율 최적화.</p>
+<p><strong>구현 방법</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">// my_custom_critic.hpp</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;nav2_mppi_controller/critic_function.hpp&quot;</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;nav2_mppi_controller/critic_data.hpp&quot;</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">my_pkg</span><span class="o">::</span><span class="nn">critics</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="p">{</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">MyCustomCritic</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">mppi</span><span class="o">::</span><span class="n">critics</span><span class="o">::</span><span class="n">CriticFunction</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="p">{</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">initialize</span><span class="p">()</span><span class="w"> </span><span class="k">override</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="w">    </span><span class="c1">// 파라미터 로드</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">getParam</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parameters_handler_</span><span class="o">-&gt;</span><span class="n">getParamGetter</span><span class="p">(</span><span class="n">name_</span><span class="p">);</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="w">    </span><span class="n">getParam</span><span class="p">(</span><span class="n">weight_</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cost_weight&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="w">    </span><span class="n">getParam</span><span class="p">(</span><span class="n">power_</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cost_power&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1u</span><span class="p">);</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="w">    </span><span class="n">getParam</span><span class="p">(</span><span class="n">my_param_</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;my_param&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="w">    </span><span class="n">enabled_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">score</span><span class="p">(</span><span class="n">mppi</span><span class="o">::</span><span class="n">CriticData</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="k">override</span>
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">enabled_</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a>
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="w">    </span><span class="c1">// data.trajectories.x/y/yaws: [batch_size × time_steps] Eigen 배열</span>
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="w">    </span><span class="c1">// data.costs: [batch_size] 누적 비용</span>
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="w">    </span><span class="c1">// data.path: 참조 경로</span>
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="w">    </span><span class="c1">// data.state: 현재 로봇 상태</span>
+<a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a>
+<a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="w">    </span><span class="c1">// 예시: 특정 구역에 근접한 궤적에 페널티</span>
+<a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">trajectories</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">rows</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a><span class="w">      </span><span class="kt">float</span><span class="w"> </span><span class="n">dist_to_zone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">computeDistanceToZone</span><span class="p">(</span>
+<a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a><span class="w">        </span><span class="n">data</span><span class="p">.</span><span class="n">trajectories</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">row</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">trajectories</span><span class="p">.</span><span class="n">y</span><span class="p">.</span><span class="n">row</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+<a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a><span class="w">      </span><span class="n">data</span><span class="p">.</span><span class="n">costs</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">weight_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="n">zone_radius_</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dist_to_zone</span><span class="p">),</span><span class="w"> </span><span class="n">power_</span><span class="p">);</span>
+<a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a>
+<a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">my_param_</span><span class="p">{</span><span class="mf">1.0f</span><span class="p">};</span>
+<a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">zone_radius_</span><span class="p">{</span><span class="mf">2.0f</span><span class="p">};</span>
+<a id="__codelineno-19-40" name="__codelineno-19-40" href="#__codelineno-19-40"></a><span class="p">};</span>
+<a id="__codelineno-19-41" name="__codelineno-19-41" href="#__codelineno-19-41"></a><span class="p">}</span>
+<a id="__codelineno-19-42" name="__codelineno-19-42" href="#__codelineno-19-42"></a>
+<a id="__codelineno-19-43" name="__codelineno-19-43" href="#__codelineno-19-43"></a><span class="n">PLUGINLIB_EXPORT_CLASS</span><span class="p">(</span><span class="n">my_pkg</span><span class="o">::</span><span class="n">critics</span><span class="o">::</span><span class="n">MyCustomCritic</span><span class="p">,</span><span class="w"> </span><span class="n">mppi</span><span class="o">::</span><span class="n">critics</span><span class="o">::</span><span class="n">CriticFunction</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>critics.xml 등록</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nt">&lt;library</span><span class="w"> </span><span class="na">path=</span><span class="s">&quot;my_pkg&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">&lt;class</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;my_pkg::critics::MyCustomCritic&quot;</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">         </span><span class="na">base_class_type=</span><span class="s">&quot;mppi::critics::CriticFunction&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span><span class="nt">&lt;description&gt;</span>Custom<span class="w"> </span>zone<span class="w"> </span>avoidance<span class="w"> </span>critic<span class="nt">&lt;/description&gt;</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">  </span><span class="nt">&lt;/class&gt;</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="nt">&lt;/library&gt;</span>
+</code></pre></div>
+<p><strong>파라미터 설정</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nt">controller_server</span><span class="p">:</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="nt">FollowPath</span><span class="p">:</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">      </span><span class="nt">critics</span><span class="p">:</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_pkg::critics::MyCustomCritic&quot;</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;mppi::critics::GoalCritic&quot;</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">        </span><span class="c1"># ... 기존 Critic들</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">      </span><span class="nt">MyCustomCritic</span><span class="p">:</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">        </span><span class="nt">cost_weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="w">        </span><span class="nt">cost_power</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="w">        </span><span class="nt">my_param</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+</code></pre></div>
+<p><strong>활용 시나리오</strong>:</p>
+<ul>
+<li><strong>사람 근접 회피</strong>: 사람 감지 결과를 구독, Critic에서 사람 위치 기반 반발력 비용 추가</li>
+<li><strong>에너지 효율</strong>: <code>sum(vx² + vy² + wz²)</code> 최소화 비용으로 에너지 절약 주행</li>
+<li><strong>도로 레인 추종</strong>: 차선 중앙으로부터의 이탈 거리 비용 추가</li>
+<li><strong>가속도 최소화</strong>: 승차감 향상을 위한 가속도 변화율(jerk) 페널티</li>
+</ul>
+<h3 id="2-motionmodel">방향 2: 커스텀 MotionModel 개발</h3>
+<p><strong>언제 사용하나</strong>: 기본 3종 모델이 로봇 운동학을 정확히 표현하지 못할 때. 예) 트레일러 달린 로봇, 4WS(4-wheel steering), 6족 보행 로봇.</p>
+<p><strong>구현 방법</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;nav2_mppi_controller/motion_models.hpp&quot;</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">my_pkg</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="p">{</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">TrailerMotionModel</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">mppi</span><span class="o">::</span><span class="n">MotionModel</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="p">{</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">isHolonomic</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">applyConstraints</span><span class="p">(</span><span class="n">mppi</span><span class="o">::</span><span class="n">models</span><span class="o">::</span><span class="n">State</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="k">override</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="w">    </span><span class="c1">// 트레일러 연결각(hitch_angle) 기반 vx, wz 제약</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">vx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">vx</span><span class="p">;</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">wz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">wz</span><span class="p">;</span>
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">hitch_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_hitch_angle_</span><span class="p">;</span>
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="w">    </span><span class="c1">// wz 제약: 트레일러 각도 한계 이내로 클램핑</span>
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a><span class="w">    </span><span class="n">wz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wz</span><span class="p">.</span><span class="n">min</span><span class="p">(</span><span class="n">vx</span><span class="p">.</span><span class="n">abs</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">trailer_length_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">tan</span><span class="p">(</span><span class="n">hitch_limit</span><span class="p">)));</span>
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">trailer_length_</span><span class="p">{</span><span class="mf">1.5f</span><span class="p">};</span>
+<a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">max_hitch_angle_</span><span class="p">{</span><span class="mf">0.5f</span><span class="p">};</span>
+<a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a><span class="p">};</span>
+<a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a><span class="p">}</span>
+<a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a>
+<a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a><span class="n">PLUGINLIB_EXPORT_CLASS</span><span class="p">(</span><span class="n">my_pkg</span><span class="o">::</span><span class="n">TrailerMotionModel</span><span class="p">,</span><span class="w"> </span><span class="n">mppi</span><span class="o">::</span><span class="n">MotionModel</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>활용 시나리오</strong>:</p>
+<ul>
+<li><strong>자율 농기계</strong>: 트레일러/작업기 연결 운동학</li>
+<li><strong>4WS 로봇</strong>: 4개 바퀴 독립 조향 모델</li>
+<li><strong>항공기 예인 트랙터</strong>: 복잡한 관절 운동학</li>
+</ul>
+<h3 id="3-trajectoryvalidator">방향 3: 커스텀 TrajectoryValidator 개발</h3>
+<p><strong>언제 사용하나</strong>: 기본 코스트맵 기반 충돌 검사 이외의 추가 유효성 검증이 필요할 때. 예) 동적 장애물, 시맨틱 레이블, 속도 프로파일 검증.</p>
+<p><strong>구현 방법</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;nav2_mppi_controller/optimal_trajectory_validator.hpp&quot;</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">my_pkg</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="p">{</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">SemanticTrajectoryValidator</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">mppi</span><span class="o">::</span><span class="n">OptimalTrajectoryValidator</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="p">{</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">  </span><span class="n">mppi</span><span class="o">::</span><span class="n">ValidationResult</span><span class="w"> </span><span class="n">validateTrajectory</span><span class="p">(</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">ArrayXXf</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">optimal_traj</span><span class="p">,</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">mppi</span><span class="o">::</span><span class="n">models</span><span class="o">::</span><span class="n">ControlSequence</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">control_seq</span><span class="p">,</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PoseStamped</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">pose</span><span class="p">,</span>
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Twist</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">speed</span><span class="p">,</span>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">nav_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Path</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">plan</span><span class="p">,</span>
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">goal</span><span class="p">)</span><span class="w"> </span><span class="k">override</span>
+<a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="w">    </span><span class="c1">// 1. 부모 클래스 충돌 검사</span>
+<a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">base_result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DefaultOptimalTrajectoryValidator</span><span class="o">::</span><span class="n">validateTrajectory</span><span class="p">(</span>
+<a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="w">      </span><span class="n">optimal_traj</span><span class="p">,</span><span class="w"> </span><span class="n">control_seq</span><span class="p">,</span><span class="w"> </span><span class="n">pose</span><span class="p">,</span><span class="w"> </span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="n">plan</span><span class="p">,</span><span class="w"> </span><span class="n">goal</span><span class="p">);</span>
+<a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">base_result</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">mppi</span><span class="o">::</span><span class="n">ValidationResult</span><span class="o">::</span><span class="n">SUCCESS</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">base_result</span><span class="p">;</span>
+<a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>
+<a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a><span class="w">    </span><span class="c1">// 2. 추가: 시맨틱 레이블 검사 (예: 금지 구역 진입 여부)</span>
+<a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">optimal_traj</span><span class="p">.</span><span class="n">cols</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isInForbiddenZone</span><span class="p">(</span><span class="n">optimal_traj</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">),</span><span class="w"> </span><span class="n">optimal_traj</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">mppi</span><span class="o">::</span><span class="n">ValidationResult</span><span class="o">::</span><span class="n">SOFT_RESET</span><span class="p">;</span>
+<a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-23-26" name="__codelineno-23-26" href="#__codelineno-23-26"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-23-27" name="__codelineno-23-27" href="#__codelineno-23-27"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">mppi</span><span class="o">::</span><span class="n">ValidationResult</span><span class="o">::</span><span class="n">SUCCESS</span><span class="p">;</span>
+<a id="__codelineno-23-28" name="__codelineno-23-28" href="#__codelineno-23-28"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-23-29" name="__codelineno-23-29" href="#__codelineno-23-29"></a><span class="p">};</span>
+<a id="__codelineno-23-30" name="__codelineno-23-30" href="#__codelineno-23-30"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="4-mppi">방향 4: 완전 커스텀 MPPI 기반 컨트롤러</h3>
+<p>기존 패키지를 참고하여 새로운 특성을 가진 컨트롤러를 처음부터 설계:</p>
+<h4 id="4-1-mppi">4-1. 멀티-에이전트 인식 MPPI</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>목적: 다른 로봇들의 예측 궤적을 고려한 충돌 회피
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>핵심 변경:
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>- 각 로봇의 예측 궤적을 구독
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>- SocialCostCritic: 다른 로봇 궤적과의 간섭 비용
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>- 분산 MPPI로 확장 (DMPC-MPPI)
+</code></pre></div>
+<h4 id="4-2-mppi">4-2. 학습 기반 비용함수 MPPI</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>목적: 신경망으로 학습된 비용함수 사용
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>핵심 변경:
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>- NeuralCritic: ONNX/TorchScript 모델을 Critic으로 래핑
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>- 비용함수를 모방학습(imitation learning)으로 학습
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>- critic_data의 trajectories 텐서를 직접 NN 입력으로 사용
+</code></pre></div>
+<h4 id="4-3-mppi-hierarchical-mppi">4-3. 계층적 MPPI (Hierarchical MPPI)</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>목적: 장기 계획 + 단기 반응의 계층 구조
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>핵심 변경:
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>- 상위 레이어: 큰 model_dt, 작은 batch_size, 긴 horizon → 글로벌 방향
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>- 하위 레이어: 작은 model_dt, 큰 batch_size, 짧은 horizon → 장애물 반응
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>- 상위 출력을 하위의 PathFollowCritic 참조 경로로 사용
+</code></pre></div>
+<h4 id="4-4-mppi">4-4. 에너지 최적화 MPPI (모바일 플랫폼)</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>목적: 배터리 수명 최대화
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>핵심 변경:
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>- EnergyCritic: 모터 전류/토크 모델 기반 에너지 비용
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>- 가속도 페널티 강화로 관성 활용 극대화
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>- 내리막 구간에서 회생제동 보상 비용
+</code></pre></div>
+<h3 id="_12">커스텀 개발 시 핵심 고려사항</h3>
+<h4 id="eigen">Eigen 배열 활용 패턴</h4>
+<p>모든 비용 계산은 배치 행렬 연산으로 구현해야 성능을 유지한다:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="c1">// 나쁜 예: for 루프</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">batch_size</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">time_steps</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span><span class="n">cost</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">computeCost</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">trajectories</span><span class="p">.</span><span class="n">x</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">t</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">trajectories</span><span class="p">.</span><span class="n">y</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">t</span><span class="p">));</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="p">}</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="c1">// 좋은 예: Eigen 벡터화 연산</span>
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="n">Eigen</span><span class="o">::</span><span class="n">ArrayXXf</span><span class="w"> </span><span class="n">dists</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">trajectories</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">goal_x</span><span class="p">).</span><span class="n">square</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="w">                         </span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">trajectories</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">goal_y</span><span class="p">).</span><span class="n">square</span><span class="p">();</span>
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="n">data</span><span class="p">.</span><span class="n">costs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">weight_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dists</span><span class="p">.</span><span class="n">rowwise</span><span class="p">().</span><span class="n">sum</span><span class="p">().</span><span class="n">sqrt</span><span class="p">();</span>
+</code></pre></div>
+<h4 id="criticdata">CriticData 캐시 활용</h4>
+<p>반복 계산이 많은 <code>furthest_reached_path_point</code>는 <code>std::optional</code> 캐시를 활용:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1">// 첫 번째 Critic이 계산하면 이후 Critic은 캐시 사용</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="n">utils</span><span class="o">::</span><span class="n">setPathFurthestPointIfNotSet</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="k">auto</span><span class="w"> </span><span class="n">furthest_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">furthest_reached_path_point</span><span class="p">.</span><span class="n">value</span><span class="p">();</span>
+</code></pre></div>
+<h4 id="_13">스레드 안전성</h4>
+<p><code>ParametersHandler</code>의 뮤텍스를 활용하여 동적 파라미터 변경 시 안전하게 처리:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">initialize</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">getParam</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parameters_handler_</span><span class="o">-&gt;</span><span class="n">getParamGetter</span><span class="p">(</span><span class="n">name_</span><span class="p">);</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">  </span><span class="c1">// addPreCallback으로 유효성 검증 추가 가능</span>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="w">  </span><span class="n">parameters_handler_</span><span class="o">-&gt;</span><span class="n">addPreCallback</span><span class="p">(</span><span class="n">name_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;.my_param&quot;</span><span class="p">,</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="w">    </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Parameter</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">as_double</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">        </span><span class="n">result</span><span class="p">.</span><span class="n">successful</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="w">        </span><span class="n">result</span><span class="p">.</span><span class="n">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;my_param must be non-negative&quot;</span><span class="p">;</span>
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="w">    </span><span class="p">});</span>
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<div class="admonition note">
+<p class="admonition-title">출처</p>
+<p>이 문서는 <code>nav2_mppi_controller</code> 패키지 (Nav2 Jazzy/Rolling 기준) 소스코드 분석을 기반으로 작성되었습니다.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../dds/session-10-integration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 세션 10 · 전체 통합 &amp; 실전 시나리오">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                세션 10 · 전체 통합 & 실전 시나리오
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lifecycle-manager/" class="md-footer__link md-footer__link--next" aria-label="Next: Lifecycle Manager">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Lifecycle Manager
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+      
+        <script src="../../../javascripts/tables.js"></script>
+      
+    
+  </body>
+</html>
