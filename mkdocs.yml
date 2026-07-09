@@ -75,6 +75,18 @@ nav:
     - VLA:
       - Overview: papers/vla/index.md
       - OpenVLA: papers/vla/openvla.md
+  - Behavior Tree:
+    - Overview: behavior-tree/index.md
+    - 세션 1 · 왜 Behavior Tree인가?: behavior-tree/session-01-why-bt.md
+    - 세션 2 · 4대 노드 타입과 Tick 전파: behavior-tree/session-02-core-nodes.md
+    - 세션 3 · Blackboard와 Ports: behavior-tree/session-03-blackboard-ports.md
+    - 세션 4 · XML과 툴체인: behavior-tree/session-04-xml-toolchain.md
+    - 세션 5 · Decorator 노드 심화: behavior-tree/session-05-decorators.md
+    - 세션 6 · Reactive 실행모델: behavior-tree/session-06-reactive-execution.md
+    - 세션 7 · Subtree와 설계 패턴: behavior-tree/session-07-subtree-design.md
+    - 세션 8 · 커스텀 노드 개발: behavior-tree/session-08-custom-nodes.md
+    - 세션 9 · ROS2 실전 통합: behavior-tree/session-09-ros2-integration.md
+    - 세션 10 · 종합 실습 & 통합: behavior-tree/session-10-integration.md
   - ROS2:
     - Overview: ros2/index.md
     - DDS:
